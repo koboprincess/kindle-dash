@@ -20,14 +20,14 @@
 
     <div class="left-col">
         <div class="todo-section">
-            <div class="todo-title">Dinner Menu</div>
+            <div class="todo-title">Today's Tasks</div>
             <div id="todo-list-dinner">Loading menu...</div>
         </div>
     </div>
 
     <div class="right-col">
         <div class="todo-section">
-            <div class="todo-title">Daily Tasks</div>
+            <div class="todo-title">Cooking</div>
             <div id="todo-list-tasks">Loading tasks...</div>
         </div>
     </div>
@@ -54,25 +54,44 @@
                 document.getElementById('temp-text').innerText = "N/A";
             });
 
-        // 3. TODOIST (Dual List)
-        const TODOIST_TOKEN = "002dafd1a220f298022f4d5851a31240a45b7c0a";
+// 3. TODOIST (Left: Today | Right: Cooking Section)
+const TODOIST_TOKEN = "REPLACE_WITH_YOUR_TOKEN";
+const COOKING_SECTION_ID = "6gPJMqP3cm3JvJw3"; // This is your specific ID
 
-        function fetchTasks(projectId, elementId) {
-            fetch(`https://api.todoist.com/rest/v2/tasks?project_id=${projectId}`, {
-                headers: { 'Authorization': `Bearer ${TODOIST_TOKEN}` }
-            })
-            .then(res => res.json())
-            .then(tasks => {
-                const container = document.getElementById(elementId);
-                container.innerHTML = tasks.length > 0 
-                    ? tasks.slice(0, 6).map(t => `<div class="task-item">○ ${t.content}</div>`).join('')
-                    : '<div class="task-item">○ All done!</div>';
-            })
-            .catch(() => document.getElementById(elementId).innerHTML = "Check Connection");
-        }
+async function updateDashboardTasks() {
+    try {
+        const res = await fetch('https://api.todoist.com/rest/v2/tasks', {
+            headers: { 'Authorization': `Bearer ${TODOIST_TOKEN}` }
+        });
+        const allTasks = await res.json();
+        
+        // Get today's date in YYYY-MM-DD format
+        const todayStr = new Date().toISOString().split('T')[0];
 
-        fetchTasks("YOUR_DINNER_PROJECT_ID", "todo-list-dinner");
-        fetchTasks("YOUR_TASK_PROJECT_ID", "todo-list-tasks");
+        // --- 1. FILTER FOR TODAY (LEFT COLUMN: todo-list-dinner) ---
+        const todayTasks = allTasks.filter(t => {
+            return t.due && t.due.date <= todayStr; 
+        });
+
+        document.getElementById('todo-list-dinner').innerHTML = todayTasks.length > 0 
+            ? todayTasks.slice(0, 8).map(t => `<div class="task-item">○ ${t.content}</div>`).join('')
+            : '<div class="task-item">○ No tasks for today!</div>';
+
+        // --- 2. FILTER FOR COOKING SECTION (RIGHT COLUMN: todo-list-tasks) ---
+        const cookingTasks = allTasks.filter(t => t.section_id === COOKING_SECTION_ID);
+
+        document.getElementById('todo-list-tasks').innerHTML = cookingTasks.length > 0 
+            ? cookingTasks.slice(0, 8).map(t => `<div class="task-item">○ ${t.content}</div>`).join('')
+            : '<div class="task-item">○ Nothing in the Cooking section!</div>';
+
+    } catch (e) {
+        console.error("Todoist Error:", e);
+        document.getElementById('todo-list-dinner').innerHTML = "Connection Error";
+        document.getElementById('todo-list-tasks').innerHTML = "Connection Error";
+    }
+}
+
+updateDashboardTasks();
 
         // 4. QUOTE
         fetch('https://api.allorigins.win/get?url=' + encodeURIComponent('https://api.quotable.io/random'))
