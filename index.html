@@ -1,1 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fridge Dash</title>
+    <style>
+        body { font-family: 'Arial', sans-serif; background: white; color: black; margin: 0; padding: 40px; width: 1264px; height: 1680px; box-sizing: border-box; }
+        .header { display: flex; justify-content: space-between; border-bottom: 5px solid black; padding-bottom: 20px; }
+        .date { font-size: 48px; font-weight: bold; }
+        .solar { text-align: right; font-size: 48px; }
+        .quote-container { margin-top: 100px; text-align: center; font-style: italic; font-size: 52px; height: 400px; display: flex; align-items: center; justify-content: center; border: 3px dashed #ccc; }
+        .todoist-section { margin-top: 60px; }
+        .todoist-title { font-size: 40px; text-decoration: underline; margin-bottom: 20px; }
+        .task { font-size: 36px; margin: 15px 0; border-bottom: 1px solid #eee; }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="date" id="current-date">Loading Date...</div>
+        <div class="solar" id="solar-data">Solar: -- kW</div>
+    </div>
 
+    <div class="quote-container" id="quote">
+        "Fetching your inspiration..."
+    </div>
+
+    <div class="todoist-section">
+        <div class="todoist-title">Fridge Tasks</div>
+        <div id="todoist-list">Loading tasks...</div>
+    </div>
+
+    <script>
+        // 1. Set the Date
+        const options = { weekday: 'long', month: 'long', day: 'numeric' };
+        document.getElementById('current-date').innerText = new Date().toLocaleDateString('en-GB', options);
+
+        // 2. Fetch Quote
+        fetch('https://api.quotable.io/random')
+            .then(res => res.json())
+            .then(data => document.getElementById('quote').innerText = `"${data.content}" — ${data.author}`);
+
+        // 3. Todoist Integration (Note: In a real setup, we'd handle the API key via GitHub Actions)
+        // For now, this is a placeholder where your GitHub Action will inject data
+    </script>
+</body>
+</html>
