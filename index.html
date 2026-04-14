@@ -1,15 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Fridge Dash</title>
+    <link rel="stylesheet" href="style.css">
+</head>
 <body>
 
     <div class="header">
         <div class="date" id="date"></div> 
         
         <div id="weather-box">
-            <img id="weather-icon" src="" alt="" style="width: 80px; height: 80px; vertical-align: middle; filter: grayscale(100%);">
+            <img id="weather-icon" src="" alt="">
             <span id="temp-text">--°C</span>
         </div>
 
         <div class="solar-stats" id="solar-text"></div> 
-    </div> <div class="left-col">
+    </div>
+
+    <div class="left-col">
         <div class="todo-section">
             <div class="todo-title">Dinner Menu</div>
             <div id="todo-list-dinner">Loading menu...</div>
@@ -26,57 +35,55 @@
     <div id="quote-box"></div>
 
     <script>
-        // Your JavaScript starts here...
-       
         // 1. DATE
         document.getElementById('date').innerText = new Date().toLocaleDateString('en-GB', { weekday: 'long', day: 'numeric', month: 'long' });
 
-        // 2. WEATHER (With Icons)
-const WEATHER_KEY = "REPLACE_WITH_OPENWEATHER_KEY";
-const CITY = "YourCity"; 
+        // 2. WEATHER
+        const WEATHER_KEY = "7b1b3a901f5152f5665f24f1385fb45f";
+        const CITY = "Ballyforan"; 
 
-fetch(`https://api.openweathermap.org/data/2.5/weather?q=${CITY}&appid=${WEATHER_KEY}&units=metric`)
-    .then(res => res.json())
-    .then(data => {
-        const temp = Math.round(data.main.temp);
-        const iconCode = data.weather[0].icon;
-        
-        // Update the temperature text
-        document.getElementById('temp-text').innerText = `${temp}°C`;
-        
-        // Update the icon using a high-contrast version (OpenWeather's 2x set)
-        const iconUrl = `https://openweathermap.org/img/wn/${iconCode}@2x.png`;
-        document.getElementById('weather-icon').src = iconUrl;
-        document.getElementById('weather-icon').alt = data.weather[0].main;
-    })
-    .catch(() => {
-        document.getElementById('temp-text').innerText = "N/A";
-    });
-        
-        // 3. QUOTE (Update the way it draws the text)
-fetch('https://api.allorigins.win/get?url=' + encodeURIComponent('https://api.quotable.io/random'))
-    .then(res => res.json())
-    .then(json => {
-        const data = JSON.parse(json.contents);
-        // This puts the quote in one line and the author in a <span> below it
-        document.getElementById('quote-box').innerHTML = 
-            `"${data.content}" <span class="quote-author">— ${data.author}</span>`;
-    })
-    .catch(() => {
-        document.getElementById('quote-box').innerHTML = 
-            `"The best way to predict the future is to create it." <span class="quote-author">— Peter Drucker</span>`;
-    });
+        fetch(`https://api.openweathermap.org/data/2.5/weather?q=${CITY}&appid=${WEATHER_KEY}&units=metric`)
+            .then(res => res.json())
+            .then(data => {
+                const temp = Math.round(data.main.temp);
+                const iconCode = data.weather[0].icon;
+                document.getElementById('temp-text').innerText = `${temp}°C`;
+                document.getElementById('weather-icon').src = `https://openweathermap.org/img/wn/${iconCode}@2x.png`;
+            })
+            .catch(() => {
+                document.getElementById('temp-text').innerText = "N/A";
+            });
 
-        // 4. TODOIST
+        // 3. TODOIST (Dual List)
         const TODOIST_TOKEN = "002dafd1a220f298022f4d5851a31240a45b7c0a";
-        fetch('https://api.todoist.com/rest/v2/tasks', {
-            headers: { 'Authorization': `Bearer ${TODOIST_TOKEN}` }
-        })
-        .then(res => res.json())
-        .then(tasks => {
-            const listContainer = document.getElementById('todo-list');
-            listContainer.innerHTML = tasks.slice(0, 7).map(t => `<div class="task-item">○ ${t.content}</div>`).join('');
-        }).catch(() => document.getElementById('todo-list').innerHTML = "Todoist connection pending...");
+
+        function fetchTasks(projectId, elementId) {
+            fetch(`https://api.todoist.com/rest/v2/tasks?project_id=${projectId}`, {
+                headers: { 'Authorization': `Bearer ${TODOIST_TOKEN}` }
+            })
+            .then(res => res.json())
+            .then(tasks => {
+                const container = document.getElementById(elementId);
+                container.innerHTML = tasks.length > 0 
+                    ? tasks.slice(0, 6).map(t => `<div class="task-item">○ ${t.content}</div>`).join('')
+                    : '<div class="task-item">○ All done!</div>';
+            })
+            .catch(() => document.getElementById(elementId).innerHTML = "Check Connection");
+        }
+
+        fetchTasks("YOUR_DINNER_PROJECT_ID", "todo-list-dinner");
+        fetchTasks("YOUR_TASK_PROJECT_ID", "todo-list-tasks");
+
+        // 4. QUOTE
+        fetch('https://api.allorigins.win/get?url=' + encodeURIComponent('https://api.quotable.io/random'))
+            .then(res => res.json())
+            .then(json => {
+                const data = JSON.parse(json.contents);
+                document.getElementById('quote-box').innerHTML = `"${data.content}" <span class="quote-author">— ${data.author}</span>`;
+            })
+            .catch(() => {
+                document.getElementById('quote-box').innerHTML = `"The best way to predict the future is to create it." <span class="quote-author">— Peter Drucker</span>`;
+            });
     </script>
 </body>
 </html>
