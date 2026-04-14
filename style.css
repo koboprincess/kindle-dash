@@ -40,6 +40,7 @@ body {
     padding-left: 50px; 
 }
 
+/* Westher Section */
 #weather-box { 
     font-size: 60px;        /* This makes it nice and big */
     font-weight: bold;      /* E-ink screens love bold text */
@@ -49,13 +50,28 @@ body {
 
 /* Quote Section */
 #quote-box { 
-    font-size: 48px; 
+    grid-column: span 2;    /* Forces it to take up the whole width */
+    font-size: 55px;        /* Slightly larger for the big space */
     line-height: 1.4; 
     font-style: italic; 
-    background: #f0f0f0; /* Light grey helps define the box on e-ink */
-    padding: 40px; 
-    border-radius: 15px;
-    margin-top: 20px;
+    background: #f0f0f0; 
+    padding: 60px;          /* More padding for a premium look */
+    border-radius: 20px;
+    margin-top: 40px;
+    text-align: center;     /* Centers the text */
+    display: flex;
+    flex-direction: column; /* Allows us to stack the quote and author */
+    align-items: center;
+    justify-content: center;
+}
+
+/* Style for the author line */
+.quote-author {
+    display: block;         /* Forces it onto a new line */
+    font-size: 40px;        /* Slightly smaller than the quote */
+    font-style: normal;     /* Not italic */
+    margin-top: 20px;       /* Space between quote and author */
+    font-weight: bold;
 }
 
 /* Todoist Section */
