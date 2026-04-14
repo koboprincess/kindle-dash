@@ -40,6 +40,13 @@ body {
     padding-left: 50px; 
 }
 
+#weather-box { 
+    font-size: 60px;        /* This makes it nice and big */
+    font-weight: bold;      /* E-ink screens love bold text */
+    flex-grow: 1;           /* Helps it stay centered between date and solar */
+    text-align: center;     /* Centers the text */
+}
+
 /* Quote Section */
 #quote-box { 
     font-size: 48px; 
