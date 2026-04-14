@@ -8,10 +8,12 @@
 <body>
 
     <div class="header">
-        <div class="date" id="date"></div>
-        <div id="weather-box"></div>
-        <div class="solar-stats" id="solar-text"></div>
+    <div class="date" id="date"></div> <div id="weather-box">
+        <img id="weather-icon" src="" alt="" style="width: 80px; height: 80px; vertical-align: middle; filter: grayscale(100%);">
+        <span id="temp-text">--°C</span>
     </div>
+
+    <div class="solar-stats" id="solar-text"></div> </div>
 
     <div class="left-col">
         <iframe id="solar-frame" ...></iframe>
@@ -28,15 +30,28 @@
         // 1. DATE
         document.getElementById('date').innerText = new Date().toLocaleDateString('en-GB', { weekday: 'long', day: 'numeric', month: 'long' });
 
-        // 2. WEATHER
-        const WEATHER_KEY = "7b1b3a901f5152f5665f24f1385fb45f";
-        const CITY = "Ballyforan"; 
-        fetch(`https://api.openweathermap.org/data/2.5/weather?q=${CITY}&appid=${WEATHER_KEY}&units=metric`)
-            .then(res => res.json())
-            .then(data => {
-                document.getElementById('weather-box').innerText = `${Math.round(data.main.temp)}°C | ${data.weather[0].main}`;
-            }).catch(() => document.getElementById('weather-box').innerText = "Weather N/A");
+        // 2. WEATHER (With Icons)
+const WEATHER_KEY = "REPLACE_WITH_OPENWEATHER_KEY";
+const CITY = "YourCity"; 
 
+fetch(`https://api.openweathermap.org/data/2.5/weather?q=${CITY}&appid=${WEATHER_KEY}&units=metric`)
+    .then(res => res.json())
+    .then(data => {
+        const temp = Math.round(data.main.temp);
+        const iconCode = data.weather[0].icon;
+        
+        // Update the temperature text
+        document.getElementById('temp-text').innerText = `${temp}°C`;
+        
+        // Update the icon using a high-contrast version (OpenWeather's 2x set)
+        const iconUrl = `https://openweathermap.org/img/wn/${iconCode}@2x.png`;
+        document.getElementById('weather-icon').src = iconUrl;
+        document.getElementById('weather-icon').alt = data.weather[0].main;
+    })
+    .catch(() => {
+        document.getElementById('temp-text').innerText = "N/A";
+    });
+        
         // 3. QUOTE (Update the way it draws the text)
 fetch('https://api.allorigins.win/get?url=' + encodeURIComponent('https://api.quotable.io/random'))
     .then(res => res.json())
