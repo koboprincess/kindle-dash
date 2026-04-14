@@ -1,1 +1,68 @@
+body { 
+    /* The Kindle Oasis 2 Landscape Resolution */
+    width: 1680px; 
+    height: 1264px; 
+    margin: 0; 
+    padding: 50px; 
+    font-family: "Helvetica", Arial, sans-serif; 
+    background: white; 
+    color: black;
+    box-sizing: border-box;
+    display: grid;
+    /* Divide screen into two equal columns */
+    grid-template-columns: 1fr 1fr; 
+    grid-template-rows: auto 1fr;
+    gap: 40px;
+}
 
+/* The Top Bar */
+.header { 
+    grid-column: span 2; 
+    display: flex; 
+    justify-content: space-between; 
+    align-items: center;
+    border-bottom: 8px solid black; 
+    padding-bottom: 20px; 
+}
+
+.date { font-size: 60px; font-weight: bold; }
+.solar-stats { font-size: 50px; text-align: right; }
+
+/* Content Areas */
+.left-col { 
+    display: flex; 
+    flex-direction: column; 
+    gap: 30px; 
+}
+
+.right-col { 
+    border-left: 5px solid black; 
+    padding-left: 50px; 
+}
+
+/* Quote Section */
+#quote-box { 
+    font-size: 48px; 
+    line-height: 1.4; 
+    font-style: italic; 
+    background: #f0f0f0; /* Light grey helps define the box on e-ink */
+    padding: 40px; 
+    border-radius: 15px;
+    margin-top: 20px;
+}
+
+/* Todoist Section */
+.todo-title { 
+    font-size: 55px; 
+    font-weight: bold; 
+    margin-bottom: 30px; 
+    text-transform: uppercase;
+}
+
+.task-item { 
+    font-size: 42px; 
+    margin: 25px 0; 
+    border-bottom: 2px solid #ddd; 
+    padding-bottom: 15px; 
+    list-style: none;
+}
