@@ -15,6 +15,7 @@
 
     <div class="left-col">
         <iframe id="solar-frame" src="REPLACE_WITH_YOUR_HUAWEI_KIOSK_URL" style="width:100%; height:550px; border:none; filter: grayscale(100%);"></iframe>
+        
         <div id="quote-box"></div>
     </div>
 
@@ -24,9 +25,8 @@
     </div>
 
     <script>
-        // 1. DATE - This will now be the ONLY place the date comes from
-        const now = new Date();
-        document.getElementById('date').innerText = now.toLocaleDateString('en-GB', { weekday: 'long', day: 'numeric', month: 'long' });
+        // 1. DATE
+        document.getElementById('date').innerText = new Date().toLocaleDateString('en-GB', { weekday: 'long', day: 'numeric', month: 'long' });
 
         // 2. WEATHER
         const WEATHER_KEY = "7b1b3a901f5152f5665f24f1385fb45f";
@@ -35,15 +35,22 @@
             .then(res => res.json())
             .then(data => {
                 document.getElementById('weather-box').innerText = `${Math.round(data.main.temp)}°C | ${data.weather[0].main}`;
-            });
+            }).catch(() => document.getElementById('weather-box').innerText = "Weather N/A");
 
-        // 3. QUOTE
-        fetch('https://api.allorigins.win/get?url=' + encodeURIComponent('https://api.quotable.io/random'))
-            .then(res => res.json())
-            .then(json => {
+        // 3. QUOTE (With Fallback)
+        async function fetchQuote() {
+            try {
+                // We use a proxy because most quote APIs block direct "local" browser requests
+                const res = await fetch('https://api.allorigins.win/get?url=' + encodeURIComponent('https://api.quotable.io/random'));
+                const json = await res.json();
                 const data = JSON.parse(json.contents);
                 document.getElementById('quote-box').innerText = `"${data.content}" — ${data.author}`;
-            });
+            } catch (e) {
+                // If the API fails, this displays instead of a blank box
+                document.getElementById('quote-box').innerText = "The best way to predict the future is to create it. — Peter Drucker";
+            }
+        }
+        fetchQuote();
 
         // 4. TODOIST
         const TODOIST_TOKEN = "002dafd1a220f298022f4d5851a31240a45b7c0a";
@@ -54,7 +61,7 @@
         .then(tasks => {
             const listContainer = document.getElementById('todo-list');
             listContainer.innerHTML = tasks.slice(0, 7).map(t => `<div class="task-item">○ ${t.content}</div>`).join('');
-        });
+        }).catch(() => document.getElementById('todo-list').innerHTML = "Todoist connection pending...");
     </script>
 </body>
 </html>
