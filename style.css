@@ -9,17 +9,17 @@ body {
     color: black;
     box-sizing: border-box;
     display: grid;
-    /* Two equal columns */
-    grid-template-columns: 1fr 1fr; 
-    /* Three fixed rows: Header (150px), Lists (780px), Quote (the rest) */
-    grid-template-rows: 150px 780px auto; 
+    /* Explicitly define 2 columns */
+    grid-template-columns: 800px 800px; 
+    /* Header, Lists, and Quote rows */
+    grid-template-rows: 150px 780px 250px; 
     gap: 40px;
-    overflow: hidden; /* Prevents the Kindle from trying to scroll */
+    overflow: hidden;
 }
 
-/* 2. THE TOP BAR (DATE & WEATHER) */
+/* 2. THE TOP BAR */
 .header { 
-    grid-column: 1 / span 2; /* Spans both columns */
+    grid-column: 1 / 3; /* Explicitly start at line 1 and end at line 3 */
     display: flex; 
     justify-content: space-between; 
     align-items: center;
@@ -27,10 +27,7 @@ body {
     padding-bottom: 20px; 
 }
 
-.date { 
-    font-size: 60px; 
-    font-weight: bold; 
-}
+.date { font-size: 60px; font-weight: bold; }
 
 #weather-box {
     display: flex;
@@ -40,63 +37,51 @@ body {
     font-weight: bold;
 }
 
-#weather-icon {
-    width: 100px;
-    height: 100px;
-    filter: grayscale(100%) contrast(1.5); /* High contrast for E-ink */
-}
+#weather-icon { width: 100px; height: 100px; filter: grayscale(100%) contrast(1.5); }
 
-/* 3. CONTENT COLUMNS (TODAY & COOKING) */
+/* 3. CONTENT COLUMNS */
 .left-col { 
+    grid-column: 1;
     padding-right: 40px;
     height: 780px;
-    display: flex;
-    flex-direction: column;
 }
 
 .right-col { 
-    border-left: 6px solid black; /* The middle divider */
+    grid-column: 2;
+    border-left: 6px solid black; 
     padding-left: 60px; 
     height: 780px;
-    display: flex;
-    flex-direction: column;
 }
 
 .todo-title { 
-    font-size: 55px; 
-    font-weight: bold; 
-    margin-bottom: 30px; 
-    text-transform: uppercase;
-    border-bottom: 4px solid black;
-    display: inline-block;
-    padding-bottom: 5px;
+    font-size: 55px; font-weight: bold; margin-bottom: 30px; 
+    text-transform: uppercase; border-bottom: 4px solid black;
 }
 
 .task-item { 
-    font-size: 42px; 
-    margin: 20px 0; 
-    border-bottom: 2px solid #ddd; 
-    padding-bottom: 15px; 
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis; /* Keeps long tasks from breaking lines */
+    font-size: 42px; margin: 20px 0; border-bottom: 2px solid #ddd; padding-bottom: 15px; 
 }
 
-/* 4. THE QUOTE BOX (FOOTER) */
+/* 4. THE QUOTE BOX - THE FIX IS HERE */
 #quote-box { 
-    grid-column: 1 / span 2; /* Spans both columns */
-    font-size: 50px; 
-    line-height: 1.4; 
-    font-style: italic; 
-    background: #f4f4f4; /* Light gray background to separate from lists */
-    padding: 40px 60px; 
-    border-radius: 20px;
-    text-align: center;
+    /* Force it to start at the far left and end at the far right */
+    grid-column: 1 / -1; 
+    width: 100%;
+    
+    /* Center the text inside */
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    align-self: end; /* Pins it to the very bottom of the screen */
+    
+    font-size: 50px; 
+    line-height: 1.4; 
+    font-style: italic; 
+    background: #f4f4f4; 
+    padding: 40px; 
+    border-radius: 20px;
+    text-align: center;
+    margin-top: 20px;
 }
 
 .quote-author {
@@ -106,6 +91,3 @@ body {
     font-weight: bold;
     margin-top: 15px;
 }
-
-/* 5. HIDDEN EXTRAS */
-.solar-stats { display: none; } /* Hidden for now as requested */
