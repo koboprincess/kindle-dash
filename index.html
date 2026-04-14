@@ -13,7 +13,32 @@
         <div class="date" id="date">Tuesday, 14 April</div>
         <div class="solar-stats" id="solar-text">Solar: -- kW</div>
     </div>
+<div class="header">
+    <div class="date" id="date">Tuesday, 14 April</div>
+    <div id="weather-box" style="font-size: 50px;">--°C</div> <div class="solar-stats" id="solar-text">Solar: -- kW</div>
+</div>
 
+<script>
+    // ... your existing Date and Quote code ...
+
+    // 4. FETCH WEATHER
+    const WEATHER_KEY = "7b1b3a901f5152f5665f24f1385fb45f";
+    const CITY = "Ballyforan"; // e.g., "Dublin"
+
+    async function fetchWeather() {
+        try {
+            const res = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${CITY}&appid=${WEATHER_KEY}&units=metric`);
+            const data = await res.json();
+            const temp = Math.round(data.main.temp);
+            const desc = data.weather[0].main;
+            document.getElementById('weather-box').innerText = `${temp}°C | ${desc}`;
+        } catch (e) {
+            document.getElementById('weather-box').innerText = "Weather N/A";
+        }
+    }
+    fetchWeather();
+</script>
+    
     <div class="left-col">
         <iframe 
             id="solar-frame" 
