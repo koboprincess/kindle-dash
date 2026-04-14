@@ -8,33 +8,34 @@
 <body>
 
     <div class="header">
-        <div class="date" id="date">Loading Date...</div>
-        <div id="weather-box">--°C</div>
-        <div class="solar-stats" id="solar-text">Solar: -- kW</div>
+        <div class="date" id="date"></div>
+        <div id="weather-box"></div>
+        <div class="solar-stats" id="solar-text"></div>
     </div>
 
     <div class="left-col">
         <iframe id="solar-frame" src="REPLACE_WITH_YOUR_HUAWEI_KIOSK_URL" style="width:100%; height:550px; border:none; filter: grayscale(100%);"></iframe>
-        <div id="quote-box">"Fetching inspiration..."</div>
+        <div id="quote-box"></div>
     </div>
 
     <div class="right-col">
         <div class="todo-title">Tasks & Dinner</div>
-        <div id="todo-list">Attempting to connect to Todoist...</div>
+        <div id="todo-list"></div>
     </div>
 
     <script>
-        // 1. DATE
-        document.getElementById('date').innerText = new Date().toLocaleDateString('en-GB', { weekday: 'long', day: 'numeric', month: 'long' });
+        // 1. DATE - This will now be the ONLY place the date comes from
+        const now = new Date();
+        document.getElementById('date').innerText = now.toLocaleDateString('en-GB', { weekday: 'long', day: 'numeric', month: 'long' });
 
         // 2. WEATHER
-        const WEATHER_KEY = "REPLACE_WITH_OPENWEATHER_KEY";
-        const CITY = "YourCity"; 
+        const WEATHER_KEY = "7b1b3a901f5152f5665f24f1385fb45f";
+        const CITY = "Ballyforan"; 
         fetch(`https://api.openweathermap.org/data/2.5/weather?q=${CITY}&appid=${WEATHER_KEY}&units=metric`)
             .then(res => res.json())
             .then(data => {
                 document.getElementById('weather-box').innerText = `${Math.round(data.main.temp)}°C | ${data.weather[0].main}`;
-            }).catch(() => document.getElementById('weather-box').innerText = "Weather N/A");
+            });
 
         // 3. QUOTE
         fetch('https://api.allorigins.win/get?url=' + encodeURIComponent('https://api.quotable.io/random'))
@@ -44,25 +45,15 @@
                 document.getElementById('quote-box').innerText = `"${data.content}" — ${data.author}`;
             });
 
-        // 4. TODOIST (The Fix)
-        const TODOIST_TOKEN = "REPLACE_WITH_YOUR_TODOIST_TOKEN";
+        // 4. TODOIST
+        const TODOIST_TOKEN = "002dafd1a220f298022f4d5851a31240a45b7c0a";
         fetch('https://api.todoist.com/rest/v2/tasks', {
             headers: { 'Authorization': `Bearer ${TODOIST_TOKEN}` }
         })
-        .then(res => {
-            if (!res.ok) throw new Error("Check API Token");
-            return res.json();
-        })
+        .then(res => res.json())
         .then(tasks => {
             const listContainer = document.getElementById('todo-list');
-            if (tasks.length === 0) {
-                listContainer.innerHTML = "No active tasks!";
-            } else {
-                listContainer.innerHTML = tasks.slice(0, 7).map(t => `<div class="task-item">○ ${t.content}</div>`).join('');
-            }
-        })
-        .catch(err => {
-            document.getElementById('todo-list').innerHTML = "Todoist Error: " + err.message;
+            listContainer.innerHTML = tasks.slice(0, 7).map(t => `<div class="task-item">○ ${t.content}</div>`).join('');
         });
     </script>
 </body>
