@@ -2,87 +2,74 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <style>
-        body { 
-            width: 1680px; height: 1264px; 
-            margin: 0; padding: 50px; 
-            font-family: "Helvetica", sans-serif; 
-            background: white; color: black;
-            box-sizing: border-box;
-            display: grid;
-            grid-template-columns: 1fr 1fr; /* Two main columns */
-            grid-template-rows: auto 1fr;
-            gap: 40px;
-        }
-
-        /* Top Bar: Date & Solar */
-        .header { 
-            grid-column: span 2; 
-            display: flex; justify-content: space-between; 
-            border-bottom: 8px solid black; padding-bottom: 20px; 
-        }
-        .date { font-size: 60px; font-weight: bold; }
-        .solar-stats { font-size: 50px; text-align: right; }
-
-        /* Main Content Areas */
-        .left-col { display: flex; flex-direction: column; gap: 40px; }
-        .right-col { border-left: 4px solid black; padding-left: 40px; }
-
-        /* Quote Styling */
-        #quote-box { 
-            font-size: 48px; line-height: 1.4; font-style: italic; 
-            background: #f0f0f0; padding: 30px; border-radius: 20px;
-        }
-
-        /* Todoist Styling */
-        .todo-title { font-size: 50px; font-weight: bold; margin-bottom: 30px; }
-        .task-item { font-size: 42px; margin: 25px 0; border-bottom: 2px solid #ddd; padding-bottom: 15px; list-style: none; }
-    </style>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kindle Fridge Dashboard</title>
+    
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
     <div class="header">
-        <div class="date" id="date">Loading...</div>
-        <div class="solar-stats" id="solar">Solar: -- kW</div>
+        <div class="date" id="date">Tuesday, 14 April</div>
+        <div class="solar-stats" id="solar-text">Solar: -- kW</div>
     </div>
 
     <div class="left-col">
-        <iframe src="YOUR_HUAWEI_KIOSK_URL" style="width:100%; height:500px; border:none;"></iframe>
+        <iframe 
+            id="solar-frame" 
+            src="REPLACE_WITH_YOUR_HUAWEI_KIOSK_URL" 
+            style="width:100%; height:550px; border:none; filter: grayscale(100%);">
+        </iframe>
         
-        <div id="quote-box">"Fetching inspiration..."</div>
+        <div id="quote-box">"Fetching your daily inspiration..."</div>
     </div>
 
     <div class="right-col">
         <div class="todo-title">Tasks & Dinner</div>
-        <div id="todo-list">Loading Todoist...</div>
+        <div id="todo-list">
+            <div class="task-item">Loading Todoist...</div>
+        </div>
     </div>
 
     <script>
-        // 1. Date
-        document.getElementById('date').innerText = new Date().toLocaleDateString('en-GB', { weekday: 'long', day: 'numeric', month: 'long' });
+        // 1. UPDATE THE DATE
+        const dateOptions = { weekday: 'long', day: 'numeric', month: 'long' };
+        document.getElementById('date').innerText = new Date().toLocaleDateString('en-GB', dateOptions);
 
-        // 2. Quotes (Using a reliable fallback)
-        async function getQuote() {
+        // 2. FETCH QUOTE (Using api.quotable.io via a proxy to avoid CORS issues)
+        async function fetchQuote() {
             try {
-                const res = await fetch('https://api.allorigins.win/get?url=' + encodeURIComponent('https://api.quotable.io/random'));
-                const data = JSON.parse((await res.json()).contents);
+                const response = await fetch('https://api.allorigins.win/get?url=' + encodeURIComponent('https://api.quotable.io/random'));
+                const json = await response.json();
+                const data = JSON.parse(json.contents);
                 document.getElementById('quote-box').innerText = `"${data.content}" — ${data.author}`;
-            } catch (e) {
+            } catch (error) {
                 document.getElementById('quote-box').innerText = "The best way to predict the future is to create it. — Peter Drucker";
             }
         }
-        getQuote();
+        fetchQuote();
 
-        // 3. Todoist
-        const TODOIST_TOKEN = "YOUR_TODOIST_TOKEN_HERE";
-        fetch('https://api.todoist.com/rest/v2/tasks', {
-            headers: { 'Authorization': `Bearer ${TODOIST_TOKEN}` }
-        })
-        .then(res => res.json())
-        .then(tasks => {
-            const list = document.getElementById('todo-list');
-            list.innerHTML = tasks.slice(0, 6).map(t => `<div class="task-item">○ ${t.content}</div>`).join('');
-        });
+        // 3. FETCH TODOIST TASKS
+        // Replace 'YOUR_TOKEN' with your actual Todoist API token
+        const TODOIST_TOKEN = "REPLACE_WITH_YOUR_TODOIST_TOKEN";
+
+        async function fetchTasks() {
+            try {
+                const response = await fetch('https://api.todoist.com/rest/v2/tasks', {
+                    headers: { 'Authorization': `Bearer ${TODOIST_TOKEN}` }
+                });
+                const tasks = await response.json();
+                const listContainer = document.getElementById('todo-list');
+                
+                // Show only the first 7 tasks to keep it tidy
+                listContainer.innerHTML = tasks.slice(0, 7).map(task => 
+                    `<div class="task-item">○ ${task.content}</div>`
+                ).join('');
+            } catch (error) {
+                document.getElementById('todo-list').innerHTML = "Unable to load tasks.";
+            }
+        }
+        fetchTasks();
     </script>
 </body>
 </html>
