@@ -1,5 +1,4 @@
-body { 
-    /* The Kindle Oasis 2 Landscape Resolution */
+body {
     width: 1680px; 
     height: 1264px; 
     margin: 0; 
@@ -9,13 +8,13 @@ body {
     color: black;
     box-sizing: border-box;
     display: grid;
-    /* Divide screen into two equal columns */
+    /* Two columns, and three rows: Header, Lists, Quote */
     grid-template-columns: 1fr 1fr; 
-    grid-template-rows: auto 1fr;
+    grid-template-rows: auto 1fr auto;
     gap: 40px;
 }
 
-/* The Top Bar */
+/* Header styling */
 .header { 
     grid-column: span 2; 
     display: flex; 
@@ -26,55 +25,32 @@ body {
 }
 
 .date { font-size: 60px; font-weight: bold; }
-.solar-stats { font-size: 50px; text-align: right; }
 
-/* Content Areas */
-.left-col { 
-    display: flex; 
-    flex-direction: column; 
-    gap: 30px; 
-}
-
-.right-col { 
-    border-left: 5px solid black; 
-    padding-left: 50px; 
-}
-
-/* Westher Section */
-#weather-box { 
-    font-size: 60px;        /* This makes it nice and big */
-    font-weight: bold;      /* E-ink screens love bold text */
-    flex-grow: 1;           /* Helps it stay centered between date and solar */
-    text-align: center;     /* Centers the text */
-}
-
-/* Quote Section */
-#quote-box { 
-    grid-column: span 2;    /* Forces it to take up the whole width */
-    font-size: 55px;        /* Slightly larger for the big space */
-    line-height: 1.4; 
-    font-style: italic; 
-    background: #f0f0f0; 
-    padding: 60px;          /* More padding for a premium look */
-    border-radius: 20px;
-    margin-top: 40px;
-    text-align: center;     /* Centers the text */
+#weather-box {
     display: flex;
-    flex-direction: column; /* Allows us to stack the quote and author */
     align-items: center;
-    justify-content: center;
-}
-
-/* Style for the author line */
-.quote-author {
-    display: block;         /* Forces it onto a new line */
-    font-size: 40px;        /* Slightly smaller than the quote */
-    font-style: normal;     /* Not italic */
-    margin-top: 20px;       /* Space between quote and author */
+    gap: 20px;
+    font-size: 70px;
     font-weight: bold;
 }
 
-/* Todoist Section */
+#weather-icon {
+    width: 100px;
+    height: 100px;
+    filter: grayscale(100%) contrast(1.5);
+}
+
+/* Column layout */
+.left-col { 
+    padding-right: 40px;
+}
+
+.right-col { 
+    border-left: 6px solid black; 
+    padding-left: 60px; 
+}
+
+/* List Items */
 .todo-title { 
     font-size: 55px; 
     font-weight: bold; 
@@ -87,5 +63,27 @@ body {
     margin: 25px 0; 
     border-bottom: 2px solid #ddd; 
     padding-bottom: 15px; 
-    list-style: none;
+}
+
+/* Quote at the bottom */
+#quote-box { 
+    grid-column: span 2; 
+    font-size: 50px; 
+    line-height: 1.4; 
+    font-style: italic; 
+    background: #f4f4f4; 
+    padding: 50px; 
+    border-radius: 20px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.quote-author {
+    display: block;
+    font-size: 38px;
+    font-style: normal;
+    font-weight: bold;
+    margin-top: 20px;
 }
