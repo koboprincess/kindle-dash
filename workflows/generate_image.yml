@@ -15,8 +15,8 @@ jobs:
         with:
           source: file://${{ github.workspace }}/index.html
           destination: dashboard.png
-          width: 1264
-          height: 1680
+          width: 1680  # Changed from 1264
+          height: 1264 # Changed from 1680
 
       - name: Commit and Push Image
         run: |
