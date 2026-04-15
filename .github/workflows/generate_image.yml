@@ -25,22 +25,32 @@ jobs:
         run: |
           node -e "
           const puppeteer = require('puppeteer');
+          const path = require('path');
           (async () => {
-            const browser = await puppeteer.launch({ 
-              executablePath: '/usr/bin/google-chrome', 
-              args: ['--no-sandbox', '--disable-web-security'] // Added disable-web-security
-            });
-            const page = await browser.newPage();
-            await page.setViewport({ width: 1680, height: 1264 });
-            
-            // Go to the page
-            await page.goto('file://${{ github.workspace }}/index-9.html');
+            try {
+              const browser = await puppeteer.launch({ 
+                executablePath: '/usr/bin/google-chrome', 
+                args: ['--no-sandbox', '--disable-setuid-sandbox', '--disable-web-security'] 
+              });
+              const page = await browser.newPage();
+              await page.setViewport({ width: 1680, height: 1264 });
+              
+              // Use path.join to create a bulletproof file URL
+              const filePath = 'file://' + path.join(process.cwd(), 'index-9.html');
+              console.log('Loading file: ' + filePath);
+              
+              await page.goto(filePath, { waitUntil: 'networkidle0' });
 
-            // WAITING: Instead of just 2 seconds, wait 10 seconds to ensure the API calls finish
-            await new Promise(r => setTimeout(r, 10000));
+              // 10 second wait for your Todoist/Quote APIs
+              await new Promise(r => setTimeout(r, 10000));
 
-            await page.screenshot({ path: 'dashboard.png' });
-            await browser.close();
+              await page.screenshot({ path: 'dashboard.png' });
+              await browser.close();
+              console.log('Screenshot saved successfully!');
+            } catch (err) {
+              console.error(err);
+              process.exit(1);
+            }
           })();
           "
 
