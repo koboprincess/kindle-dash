@@ -1,7 +1,7 @@
 name: Generate Kindle Image
 on:
   schedule:
-    - cron: '0 */3 * * *' # This runs at minute 0, every 3rd hour
+    - cron: '0 6-23/3 * * *' # Runs every 3 hours, between 6:00 and 23:59 UTC
   workflow_dispatch:
 
 jobs:
@@ -58,9 +58,9 @@ jobs:
 
       - name: Convert for Kindle Screensaver
         run: |
-          # This step makes the image compatible with jailbroken Kindle screensaver systems
           sudo apt-get install -y imagemagick
-          convert dashboard.png -colorspace gray -depth 8 dashboard.png
+          # Convert to 8-bit Grayscale and strip metadata for jailbroken Kindle battery life
+          convert dashboard.png -colorspace gray -depth 8 -strip dashboard.png
 
       - name: Commit and Push
         run: |
@@ -68,12 +68,4 @@ jobs:
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
           git add dashboard.png
           git commit -m "Refresh dashboard image" || exit 0
-          git push
-
-      - name: Commit and Push
-        run: |
-          git config --global user.name "github-actions[bot]"
-          git config --global user.email "github-actions[bot]@users.noreply.github.com"
-          git add dashboard.png
-          git commit -m "Refresh image" || exit 0
           git push
