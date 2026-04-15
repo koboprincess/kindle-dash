@@ -26,11 +26,19 @@ jobs:
           node -e "
           const puppeteer = require('puppeteer');
           (async () => {
-            const browser = await puppeteer.launch({ executablePath: '/usr/bin/google-chrome', args: ['--no-sandbox'] });
+            const browser = await puppeteer.launch({ 
+              executablePath: '/usr/bin/google-chrome', 
+              args: ['--no-sandbox', '--disable-web-security'] // Added disable-web-security
+            });
             const page = await browser.newPage();
             await page.setViewport({ width: 1680, height: 1264 });
-            await page.goto('file://${{ github.workspace }}/index.html', { waitUntil: 'networkidle0' });
-            await new Promise(r => setTimeout(r, 2000));
+            
+            // Go to the page
+            await page.goto('file://${{ github.workspace }}/index-9.html');
+
+            // WAITING: Instead of just 2 seconds, wait 10 seconds to ensure the API calls finish
+            await new Promise(r => setTimeout(r, 10000));
+
             await page.screenshot({ path: 'dashboard.png' });
             await browser.close();
           })();
