@@ -98,15 +98,15 @@ async function updateDashboardTasks() {
 
 updateDashboardTasks();
 
-// 4. QUOTE (Using Quoteslate API - no proxy needed)
-fetch('https://quoteslate.vercel.app/api/quotes/random')
+// 4. QUOTE (Using ZenQuotes - More reliable for GitHub Actions)
+fetch('https://zenquotes.io/api/random')
     .then(res => res.json())
     .then(data => {
-        // Quoteslate uses .quote and .author
-        document.getElementById('quote-box').innerHTML = `"${data.quote}" <span class="quote-author">— ${data.author}</span>`;
+        // ZenQuotes returns an array: [{q: "quote", a: "author"}]
+        const q = data[0];
+        document.getElementById('quote-box').innerHTML = `"${q.q}" <span class="quote-author">— ${q.a}</span>`;
     })
     .catch(() => {
-        // Fallback if the API is slow or down
         document.getElementById('quote-box').innerHTML = `"The best way to predict the future is to create it." <span class="quote-author">— Peter Drucker</span>`;
     });
     </script>
