@@ -1,7 +1,7 @@
 /* 1. MAIN PAGE LAYOUT */
 :root {
     /* Edit this number to change the length of both column lines */
-    --header-line-length: 600px; 
+    --header-line-length: 750px; 
 }
 
 body {
@@ -43,7 +43,7 @@ body {
     
     /* --- MANUALLY MOVE DATE HERE --- */
     top: 20px;   /* Distance from top edge */
-    left: 20px;  /* Distance from left edge */
+    left: 0px;  /* Distance from left edge */
     
     /* Font Styling */
     font-size: 55px; 
@@ -107,7 +107,7 @@ body {
     grid-column: 2;
     border-left: 6px solid black; /* This is your center line */
     padding-left: 40px; /* Space after the center line */
-    padding-right: 40px;
+    padding-right: 0px;
 }
 
 .todo-title { 
@@ -118,12 +118,13 @@ body {
     
     /* THE LINE FIX */
     border-bottom: 4px solid black;
-    width: var(--header-line-length);
+    width: 100%(--header-line-length);
     display: block; 
     
     /* Ensures the line stays pinned to the left */
-    margin-left: 0;
-    margin-right: auto;
+.task-item {
+    font-size: 32px;
+    margin-bottom: 12px;
 }
 
 /* 4. THE QUOTE BOX */
@@ -133,7 +134,7 @@ body {
     /* FIX: Changed width from 100% to auto. 
        'auto' tells the box to fill the available space 
        WITHOUT pushing past the body's padding. */
-    width: auto !important; 
+    width: 100% !important; 
     box-sizing: border-box;
     
     display: block; 
@@ -145,9 +146,9 @@ body {
     line-height: 1.4; 
     font-style: italic; 
     background: #f4f4f4; 
-    padding: 20px; 
+    padding: 30px; 
     border-radius: 20px;
-    margin-top: 20px;
+    margin-top: 40px;
 }
 
 .quote-author {
