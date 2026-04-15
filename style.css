@@ -51,10 +51,16 @@ body {
 }
 
 /* 3. CONTENT COLUMNS */
+:root {
+    /* Edit this number to change the length of both lines at once */
+    --header-line-length: 450px; 
+}
+
+/* 3. CONTENT COLUMNS */
 .left-col { 
     grid-column: 1;
-    /* Remove padding-right to let the line reach the center divider */
-    padding-right: 0; 
+    /* Added padding-left to match the right column's alignment */
+    padding-left: 40px; 
     height: 540px;
 }
 
@@ -62,7 +68,7 @@ body {
     grid-column: 2;
     border-left: 6px solid black; 
     padding-left: 40px; 
-    /* Add padding-right to match the left-most edge of the screen */
+    /* Padding-right no longer affects the line length */
     padding-right: 80px; 
     height: 540px;
 }
@@ -72,10 +78,15 @@ body {
     font-weight: bold; 
     margin-bottom: 30px; 
     text-transform: uppercase; 
+    
+    /* THE LINE FIX */
     border-bottom: 4px solid black;
-    /* Ensure the block takes full width so the line spans the column */
+    width: var(--header-line-length);
     display: block; 
-    width: 100%;
+    
+    /* Ensures the line stays pinned to the left */
+    margin-left: 0;
+    margin-right: auto;
 }
 
 /* 4. THE QUOTE BOX - THE FIX IS HERE */
