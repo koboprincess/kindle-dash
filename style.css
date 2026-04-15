@@ -1,4 +1,9 @@
 /* 1. MAIN PAGE LAYOUT */
+:root {
+    /* Edit this number to change the length of both column lines */
+    --header-line-length: 600px; 
+}
+
 body {
     position: relative; /* This keeps the date inside the body corners */
     width: 1680px; 
@@ -18,24 +23,30 @@ body {
     /* ROW 1 (Weather): ends at 150px 
        ROW 2 (Tasks): ends at 700px 
        ROW 3 (Quote): stays at the bottom */
-    grid-template-rows: 150px 500px auto;
+    grid-template-rows: 200px 650px auto;
     /* This ensures the grid fills the whole 1448px width */
     width: 1680px;
     gap: 0; 
     overflow: hidden;
 }
 
-/* 2. THE TOP BAR */
+/* 2. THE HEADER (DATE + WEATHER) */
+#header-container {
+    grid-column: 1 / 3;
+    display: flex;
+    align-items: center; /* Vertically centers date and weather info */
+    width: 100%;
+    position: relative; /* Anchor for the absolute centering of weather */
+    border-bottom: 2px solid #eee; /* Optional: subtle divider below header */
+    margin-bottom: 20px;
+}
+
 #date-box {
-    position: absolute;
-    top: 40px;   /* Matches your body padding */
-    left: 40px;  /* Matches your body padding */
-    
-    /* Font Styling */
-    font-size: 35px; 
+    /* Stays in the flow on the far left */
+    font-size: 45px;
     font-weight: bold;
     text-transform: uppercase;
-    line-height: 1.2;
+    line-height: 1.1;
 }
 
 #date-text {
@@ -45,37 +56,36 @@ body {
 }
 
 #weather-box {
-    grid-column: 1 / 3; /* Spans across the whole top */
+    /* This centers the weather perfectly regardless of the date's width */
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    
     display: flex;
-    justify-content: center; /* This is the "Center" part */
     align-items: center;
-    padding-top: 10px; 
-    width: 100%;
+    gap: 20px;
 }
 
 #weather-icon { 
-    width: 150px; 
-    height: 150px; 
+    width: 160px; 
+    height: 160px; 
     filter: grayscale(100%) contrast(2.5); 
 }
 
 .temp-container {
     display: flex;
-    flex-direction: column; /* Stacks Temp and Hi/Lo vertically */
-    justify-content: center;
+    flex-direction: column;
 }
 
 #temp-text { 
-    font-size: 75px; /* Sized down slightly for better fit */
+    font-size: 90px; 
     font-weight: bold; 
-    line-height: 1;
+    line-height: 0.9;
 }
 
 #hi-lo-text { 
-    font-size: 28px; /* Crisp size for Kindle */
+    font-size: 32px;
     font-weight: bold;
-    color: black;
-    margin-top: 2px;
 }
 
 /* 3. CONTENT COLUMNS */
