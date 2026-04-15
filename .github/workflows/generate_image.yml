@@ -1,7 +1,7 @@
 name: Generate Kindle Image
 on:
   schedule:
-    - cron: '*/30 * * * *'
+    - cron: '0 */3 * * *' # This runs at minute 0, every 3rd hour
   workflow_dispatch:
 
 jobs:
