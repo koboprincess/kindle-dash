@@ -21,7 +21,8 @@ body {
 #weather-box {
     display: flex;
     align-items: center;
-    gap: 25px;
+    gap: 15px; /* Reduced gap slightly to fit everything */
+    min-width: 350px; /* Ensures the box doesn't shrink */
 }
 
 #weather-icon { 
@@ -37,16 +38,16 @@ body {
 }
 
 #temp-text { 
-    font-size: 80px; 
+    font-size: 75px; /* Sized down slightly for better fit */
     font-weight: bold; 
     line-height: 1;
 }
 
 #hi-lo-text { 
-    font-size: 32px; /* Makes Hi/Lo smaller and cleaner */
+    font-size: 28px; /* Crisp size for Kindle */
     font-weight: bold;
     color: black;
-    margin-top: 5px;
+    margin-top: 2px;
 }
 
 /* 3. CONTENT COLUMNS */
