@@ -26,9 +26,9 @@ body {
 }
 
 #weather-icon { 
-    width: 120px; 
-    height: 120px; 
-    filter: grayscale(100%) contrast(1.5); 
+    width: 150px; 
+    height: 150px; 
+    filter: grayscale(100%) contrast(2.5); 
 }
 
 .temp-container {
@@ -63,7 +63,7 @@ body {
     border-left: 6px solid black; 
     padding-left: 60px; 
     /* Add padding-right to match the left-most edge of the screen */
-    padding-right: 40px; 
+    padding-right: 80px; 
     height: 780px;
 }
 
