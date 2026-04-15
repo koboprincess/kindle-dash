@@ -32,37 +32,27 @@ body {
 /* 2. THE HEADER (DATE + WEATHER) */
 #header-container {
     grid-column: 1 / 3;
-    display: flex;
-    align-items: center; /* Vertically centers date and weather info */
     width: 100%;
-    position: relative; /* Anchor for the absolute centering of weather */
-    border-bottom: 2px solid #eee; /* Optional: subtle divider below header */
-    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    position: relative; /* This is the anchor for the weather-box */
 }
 
 #date-box {
-    /* Stays in the flow on the far left */
-    font-size: 45px;
-    font-weight: bold;
-    text-transform: uppercase;
-    line-height: 1.1;
-}
-
-#date-text {
-    font-size: 40px; /* Make the date large and readable */
-    font-weight: bold;
-    text-transform: uppercase;
+    /* Stays on the far left */
+    text-align: left;
+    z-index: 2;
 }
 
 #weather-box {
-    /* This centers the weather perfectly regardless of the date's width */
     position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
+    left: 50%; /* Moves the start of the box to the exact middle */
+    transform: translateX(-50%); /* Pulls the box back by half its own width to center it */
     
     display: flex;
     align-items: center;
     gap: 20px;
+    z-index: 1;
 }
 
 #weather-icon { 
