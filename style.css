@@ -9,12 +9,15 @@ body {
     color: black;
     box-sizing: border-box;
     display: grid;
-    /* Explicitly define 2 columns */
-    grid-template-columns: 600px 600px; 
-    /* Header, Lists, and Quote rows */
-    grid-template-rows: 150px 500px 250px; 
-    gap: 40px;
-    overflow: hidden;
+    
+    /* 1fr 1fr means exactly 50/50. 
+       If you want to move the line left or right, change these ratios 
+       (e.g., 0.8fr 1.2fr moves the line to the left) */
+    grid-template-columns: 1fr 1fr; 
+    
+    /* This ensures the grid fills the whole 1448px width */
+    width: 1448px;
+    gap: 0; /* Removing gap makes the border sit exactly in the middle */
 }
 
 /* 2. THE TOP BAR */
@@ -59,18 +62,16 @@ body {
 /* 3. CONTENT COLUMNS */
 .left-col { 
     grid-column: 1;
-    /* Added padding-left to match the right column's alignment */
-    padding-left: 40px; 
-    height: 540px;
+    padding-right: 40px; /* Space before the center line */
+    padding-left: 40px;
+    text-align: left;
 }
 
 .right-col { 
     grid-column: 2;
-    border-left: 6px solid black; 
-    padding-left: 40px; 
-    /* Padding-right no longer affects the line length */
-    padding-right: 80px; 
-    height: 540px;
+    border-left: 6px solid black; /* This is your center line */
+    padding-left: 40px; /* Space after the center line */
+    padding-right: 40px;
 }
 
 .todo-title { 
