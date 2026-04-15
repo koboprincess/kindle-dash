@@ -1,7 +1,7 @@
 /* 1. MAIN PAGE LAYOUT */
 body {
-    width: 1448px; 
-    height: 1072px; 
+    width: 1680px; 
+    height: 1264px; 
     margin: 0; 
     padding: 40px; 
     font-family: "Helvetica", Arial, sans-serif; 
@@ -16,7 +16,7 @@ body {
     grid-template-columns: 1fr 1fr; 
     
     /* This ensures the grid fills the whole 1448px width */
-    width: 1448px;
+    width: 1680px;
     gap: 0; /* Removing gap makes the border sit exactly in the middle */
 }
 
