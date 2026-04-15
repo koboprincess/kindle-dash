@@ -57,7 +57,7 @@ body {
     
     /* --- MANUALLY MOVE WEATHER HERE --- */
     top: 20px;    /* Distance from top edge */
-    left: 1200px;  /* 840 is exactly half of 1680px */
+    left: 1150px;  /* 840 is exactly half of 1680px */
     
     /* This centers the box on the coordinate so '840' is the middle of the icon/temp */
     /*transform: translateX(-50%); */
