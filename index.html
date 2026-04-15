@@ -61,27 +61,30 @@ const COOKING_SECTION_ID = "6gPJMqP3cm3JvJw3";
 // Inside your index.html script
 async function updateDashboardTasks() {
     try {
-        const res = await fetch('https://api.todoist.com/rest/v2/tasks', {
-            method: 'GET',
-            headers: { 
-                'Authorization': `Bearer ${TODOIST_TOKEN}`,
-            }
+        // 1. Get all sections first to find the ID by name
+        const sectionsRes = await fetch('https://api.todoist.com/rest/v2/sections', {
+            headers: { 'Authorization': `Bearer ${TODOIST_TOKEN}` }
         });
+        const sections = await sectionsRes.json();
         
-        if (res.status === 410) console.log("PAGE LOG: Todoist says this endpoint or resource is GONE (410).");
-        if (res.status === 429) console.log("PAGE LOG: Todoist says TOO MANY REQUESTS (429).");
+        // Find the section named "Cooking"
+        const cookingSection = sections.find(s => s.name === "Cooking");
+        const REAL_ID = cookingSection ? cookingSection.id : null;
         
+        console.log("PAGE LOG: Found Cooking ID:", REAL_ID);
+
+        // 2. Now get the tasks
+        const res = await fetch('https://api.todoist.com/rest/v2/tasks', {
+            headers: { 'Authorization': `Bearer ${TODOIST_TOKEN}` }
+        });
         const allTasks = await res.json();
-        const todayStr = new Date().toISOString().split('T')[0];
-
-        // Filter for Today
-        const todayTasks = allTasks.filter(t => t.due && t.due.date <= todayStr);
-        document.getElementById('todo-list-dinner').innerHTML = todayTasks.length > 0 
-            ? todayTasks.slice(0, 8).map(t => `<div class="task-item">○ ${t.content}</div>`).join('')
-            : '<div class="task-item">○ No tasks for today!</div>';
-
-        // Filter for Cooking Section
-        const cookingTasks = allTasks.filter(t => t.section_id === COOKING_SECTION_ID);
+        
+        // ... (rest of your filtering logic) ...
+        
+        // Use REAL_ID here instead of the hardcoded one
+        const cookingTasks = allTasks.filter(t => t.section_id === REAL_ID);
+        
+        // ... (rest of the display logic)
         document.getElementById('todo-list-tasks').innerHTML = cookingTasks.length > 0 
             ? cookingTasks.slice(0, 8).map(t => `<div class="task-item">○ ${t.content}</div>`).join('')
             : '<div class="task-item">○ Nothing in the Cooking section!</div>';
