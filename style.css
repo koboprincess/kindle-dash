@@ -17,7 +17,8 @@ body {
     
     /* This ensures the grid fills the whole 1448px width */
     width: 1680px;
-    gap: 0; /* Removing gap makes the border sit exactly in the middle */
+    gap: 0; 
+    overflow: hidden;
 }
 
 /* 2. THE TOP BAR */
@@ -90,14 +91,18 @@ body {
     margin-right: auto;
 }
 
-/* 4. THE QUOTE BOX - THE FIX IS HERE */
+/* 4. THE QUOTE BOX */
 #quote-box { 
-    grid-column: 1 / 3 !important; /* Forces it to span both columns */
-    width: 100% !important;
+    grid-column: 1 / 3 !important; 
+    
+    /* FIX: Changed width from 100% to auto. 
+       'auto' tells the box to fill the available space 
+       WITHOUT pushing past the body's padding. */
+    width: auto !important; 
+    box-sizing: border-box;
+    
     display: block; 
     clear: both;
-    
-    /* Center text */
     text-align: center;
     
     /* Styling */
