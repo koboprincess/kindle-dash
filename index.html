@@ -41,7 +41,7 @@
         // 1. DATE
         document.getElementById('date').innerText = new Date().toLocaleDateString('en-GB', { weekday: 'long', day: 'numeric', month: 'long' });
 
-        // 2. WEATHER (Updated for Hi/Lo)
+        // 2. WEATHER (Corrected Hi/Lo)
         const WEATHER_KEY = "7b1b3a901f5152f5665f24f1385fb45f";
         const CITY = "Ballyforan"; 
 
@@ -62,109 +62,93 @@
                 document.getElementById('hi-lo-text').innerText = "";
             });
 
-// 3. TODOIST (Updated with better error handling and CORS support)
-const TODOIST_TOKEN = "002dafd1a220f298022f4d5851a31240a45b7c0a";
-const COOKING_SECTION_ID = "6gPJMqP3cm3JvJw3";
+        // 3. TODOIST (With Safety Braces)
+        const TODOIST_TOKEN = "002dafd1a220f298022f4d5851a31240a45b7c0a";
 
-// Inside your index.html script
-async function updateDashboardTasks() {
-    try {
-        // 1. Get all sections first to find the ID by name
-        const sectionsRes = await fetch('https://api.todoist.com/rest/v2/sections', {
-            headers: { 'Authorization': `Bearer ${TODOIST_TOKEN}` }
-        });
-        const sections = await sectionsRes.json();
-        
-        // Find the section named "Cooking"
-        const cookingSection = sections.find(s => s.name === "Cooking");
-        const REAL_ID = cookingSection ? cookingSection.id : null;
-        
-        console.log("PAGE LOG: Found Cooking ID:", REAL_ID);
+        async function updateDashboardTasks() {
+            try {
+                const sectionsRes = await fetch('https://api.todoist.com/rest/v2/sections', {
+                    headers: { 'Authorization': `Bearer ${TODOIST_TOKEN}` }
+                });
+                const sections = await sectionsRes.json();
+                const cookingSection = sections.find(s => s.name === "Cooking");
+                const REAL_ID = cookingSection ? cookingSection.id : null;
 
-        // 2. Now get the tasks
-        const res = await fetch('https://api.todoist.com/rest/v2/tasks', {
-            headers: { 'Authorization': `Bearer ${TODOIST_TOKEN}` }
-        });
-        const allTasks = await res.json();
-        
-        // ... (rest of your filtering logic) ...
-        
-        // Use REAL_ID here instead of the hardcoded one
-        const cookingTasks = allTasks.filter(t => t.section_id === REAL_ID);
-        
-        // ... (rest of the display logic)
-        document.getElementById('todo-list-tasks').innerHTML = cookingTasks.length > 0 
-            ? cookingTasks.slice(0, 8).map(t => `<div class="task-item">○ ${t.content}</div>`).join('')
-            : '<div class="task-item">○ Nothing in the Cooking section!</div>';
+                const res = await fetch('https://api.todoist.com/rest/v2/tasks', {
+                    headers: { 'Authorization': `Bearer ${TODOIST_TOKEN}` }
+                });
+                const allTasks = await res.json();
+                const todayStr = new Date().toISOString().split('T')[0];
 
-    } catch (e) {
-        console.error("Todoist Error:", e);
-        document.getElementById('todo-list-dinner').innerHTML = "Connection Error";
-        document.getElementById('todo-list-tasks').innerHTML = "Connection Error";
-    }
-}
+                const todayTasks = allTasks.filter(t => t.due && t.due.date <= todayStr);
+                document.getElementById('todo-list-dinner').innerHTML = todayTasks.length > 0 
+                    ? todayTasks.slice(0, 8).map(t => `<div class="task-item">○ ${t.content}</div>`).join('')
+                    : '<div class="task-item">○ No tasks for today!</div>';
 
-updateDashboardTasks();
+                const cookingTasks = allTasks.filter(t => t.section_id === REAL_ID);
+                document.getElementById('todo-list-tasks').innerHTML = cookingTasks.length > 0 
+                    ? cookingTasks.slice(0, 8).map(t => `<div class="task-item">○ ${t.content}</div>`).join('')
+                    : '<div class="task-item">○ Nothing in the Cooking section!</div>';
+            } catch (e) {
+                console.error("Todoist Error:", e);
+            }
+        }
+        updateDashboardTasks();
 
-// 4. QUOTE (Local Randomizer - 50 Motivational Quotes)
-const myQuotes = [
-    { text: "The secret of getting ahead is getting started.", author: "Mark Twain" },
-    { text: "It’s not whether you get knocked down, it’s whether you get up.", author: "Vince Lombardi" },
-    { text: "The only way to do great work is to love what you do.", author: "Steve Jobs" },
-    { text: "Don’t count the days, make the days count.", author: "Muhammad Ali" },
-    { text: "Everything you’ve ever wanted is on the other side of fear.", author: "George Addair" },
-    { text: "Success is not final, failure is not fatal: it is the courage to continue that counts.", author: "Winston Churchill" },
-    { text: "Hardships often prepare ordinary people for an extraordinary destiny.", author: "C.S. Lewis" },
-    { text: "Believe you can and you're halfway there.", author: "Theodore Roosevelt" },
-    { text: "Your talent determines what you can do. Your motivation determines how much you are willing to do.", author: "Lou Holtz" },
-    { text: "The only person you are destined to become is the person you decide to be.", author: "Ralph Waldo Emerson" },
-    { text: "I find that the harder I work, the more luck I seem to have.", author: "Thomas Jefferson" },
-    { text: "Opportunities don't happen. You create them.", author: "Chris Grosser" },
-    { text: "Don't be afraid to give up the good to go for the great.", author: "John D. Rockefeller" },
-    { text: "I never dreamed about success. I worked for it.", author: "Estée Lauder" },
-    { text: "Great things are done by a series of small things brought together.", author: "Vincent Van Gogh" },
-    { text: "The successful warrior is the average man, with laser-like focus.", author: "Bruce Lee" },
-    { text: "Action is the foundational key to all success.", author: "Pablo Picasso" },
-    { text: "Don’t let yesterday take up too much of today.", author: "Will Rogers" },
-    { text: "The best time to plant a tree was 20 years ago. The second best time is now.", author: "Chinese Proverb" },
-    { text: "Whether you think you can or you think you can’t, you’re right.", author: "Henry Ford" },
-    { text: "Small deeds done are better than great deeds planned.", author: "Peter Marshall" },
-    { text: "The road to success is always under construction.", author: "Lily Tomlin" },
-    { text: "Consistency is more important than perfection.", author: "Unknown" },
-    { text: "Don't stop when you're tired. Stop when you're done.", author: "David Goggins" },
-    { text: "If you are going through hell, keep going.", author: "Winston Churchill" },
-    { text: "Discipline is choosing between what you want now and what you want most.", author: "Abraham Lincoln" },
-    { text: "Focus on being productive instead of busy.", author: "Tim Ferriss" },
-    { text: "You don’t have to be great to start, but you have to start to be great.", author: "Zig Ziglar" },
-    { text: "Everything is hard before it is easy.", author: "Goethe" },
-    { text: "What we fear of doing most is usually what we most need to do.", author: "Ralph Waldo Emerson" },
-    { text: "One day or day one. You decide.", author: "Unknown" },
-    { text: "The future depends on what you do today.", author: "Mahatma Gandhi" },
-    { text: "It always seems impossible until it's done.", author: "Nelson Mandela" },
-    { text: "Success is the sum of small efforts, repeated day in and day out.", author: "Robert Collier" },
-    { text: "Energy and persistence conquer all things.", author: "Benjamin Franklin" },
-    { text: "The distance between insanity and genius is measured only by success.", author: "Bruce Feirstein" },
-    { text: "Motivation is what gets you started. Habit is what keeps you going.", author: "Jim Ryun" },
-    { text: "Fall seven times, stand up eight.", author: "Japanese Proverb" },
-    { text: "Your time is limited, so don't waste it living someone else's life.", author: "Steve Jobs" },
-    { text: "Start where you are. Use what you have. Do what you can.", author: "Arthur Ashe" },
-    { text: "Don’t wait for opportunity. Create it.", author: "Unknown" },
-    { text: "Dream big and dare to fail.", author: "Norman Vaughan" },
-    { text: "Do one thing every day that scares you.", author: "Eleanor Roosevelt" },
-    { text: "What you do speaks so loudly that I cannot hear what you say.", author: "Ralph Waldo Emerson" },
-    { text: "Tough times never last, but tough people do.", author: "Robert Schuller" },
-    { text: "The power of imagination makes us infinite.", author: "John Muir" },
-    { text: "Efficiency is doing things right; effectiveness is doing the right things.", author: "Peter Drucker" },
-    { text: "Quality is not an act, it is a habit.", author: "Aristotle" },
-    { text: "Keep your face always toward the sunshine—and shadows will fall behind you.", author: "Walt Whitman" },
-    { text: "You miss 100% of the shots you don’t take.", author: "Wayne Gretzky" }
-];
+        // 4. QUOTE (Fixed List and Closing Tags)
+        const myQuotes = [
+            { text: "The secret of getting ahead is getting started.", author: "Mark Twain" },
+            { text: "It’s not whether you get knocked down, it’s whether you get up.", author: "Vince Lombardi" },
+            { text: "The only way to do great work is to love what you do.", author: "Steve Jobs" },
+            { text: "Don’t count the days, make the days count.", author: "Muhammad Ali" },
+            { text: "Everything you’ve ever wanted is on the other side of fear.", author: "George Addair" },
+            { text: "Success is not final, failure is not fatal: it is the courage to continue that counts.", author: "Winston Churchill" },
+            { text: "Hardships often prepare ordinary people for an extraordinary destiny.", author: "C.S. Lewis" },
+            { text: "Believe you can and you're halfway there.", author: "Theodore Roosevelt" },
+            { text: "Your talent determines what you can do. Your motivation determines how much you are willing to do.", author: "Lou Holtz" },
+            { text: "The only person you are destined to become is the person you decide to be.", author: "Ralph Waldo Emerson" },
+            { text: "I find that the harder I work, the more luck I seem to have.", author: "Thomas Jefferson" },
+            { text: "Opportunities don't happen. You create them.", author: "Chris Grosser" },
+            { text: "Don't be afraid to give up the good to go for the great.", author: "John D. Rockefeller" },
+            { text: "I never dreamed about success. I worked for it.", author: "Estée Lauder" },
+            { text: "Great things are done by a series of small things brought together.", author: "Vincent Van Gogh" },
+            { text: "The successful warrior is the average man, with laser-like focus.", author: "Bruce Lee" },
+            { text: "Action is the foundational key to all success.", author: "Pablo Picasso" },
+            { text: "Don’t let yesterday take up too much of today.", author: "Will Rogers" },
+            { text: "The best time to plant a tree was 20 years ago. The second best time is now.", author: "Chinese Proverb" },
+            { text: "Whether you think you can or you think you can’t, you’re right.", author: "Henry Ford" },
+            { text: "Small deeds done are better than great deeds planned.", author: "Peter Marshall" },
+            { text: "The road to success is always under construction.", author: "Lily Tomlin" },
+            { text: "Consistency is more important than perfection.", author: "Unknown" },
+            { text: "Don't stop when you're tired. Stop when you're done.", author: "David Goggins" },
+            { text: "If you are going through hell, keep going.", author: "Winston Churchill" },
+            { text: "Discipline is choosing between what you want now and what you want most.", author: "Abraham Lincoln" },
+            { text: "Focus on being productive instead of busy.", author: "Tim Ferriss" },
+            { text: "You don’t have to be great to start, but you have to start to be great.", author: "Zig Ziglar" },
+            { text: "Everything is hard before it is easy.", author: "Goethe" },
+            { text: "What we fear of doing most is usually what we most need to do.", author: "Ralph Waldo Emerson" },
+            { text: "One day or day one. You decide.", author: "Unknown" },
+            { text: "The future depends on what you do today.", author: "Mahatma Gandhi" },
+            { text: "It always seems impossible until it's done.", author: "Nelson Mandela" },
+            { text: "Success is the sum of small efforts, repeated day in and day out.", author: "Robert Collier" },
+            { text: "Energy and persistence conquer all things.", author: "Benjamin Franklin" },
+            { text: "The distance between insanity and genius is measured only by success.", author: "Bruce Feirstein" },
+            { text: "Motivation is what gets you started. Habit is what keeps you going.", author: "Jim Ryun" },
+            { text: "Fall seven times, stand up eight.", author: "Japanese Proverb" },
+            { text: "Your time is limited, so don't waste it living someone else's life.", author: "Steve Jobs" },
+            { text: "Start where you are. Use what you have. Do what you can.", author: "Arthur Ashe" },
+            { text: "Don’t wait for opportunity. Create it.", author: "Unknown" },
+            { text: "Dream big and dare to fail.", author: "Norman Vaughan" },
+            { text: "Do one thing every day that scares you.", author: "Eleanor Roosevelt" },
+            { text: "What you do speaks so loudly that I cannot hear what you say.", author: "Ralph Waldo Emerson" },
+            { text: "Tough times never last, but tough people do.", author: "Robert Schuller" },
+            { text: "The power of imagination makes us infinite.", author: "John Muir" },
+            { text: "Efficiency is doing things right; effectiveness is doing the right things.", author: "Peter Drucker" },
+            { text: "Quality is not an act, it is a habit.", author: "Aristotle" },
+            { text: "Keep your face always toward the sunshine—and shadows will fall behind you.", author: "Walt Whitman" },
+            { text: "You miss 100% of the shots you don’t take.", author: "Wayne Gretzky" }
+        ];
 
-// Pick a random quote
-const randomQuote = myQuotes[Math.floor(Math.random() * myQuotes.length)];
-
-// Update the box
-document.getElementById('quote-box').innerHTML = 
-    `"${randomQuote.text}" <span class="quote-author">— ${randomQuote.author}</span>`;
-</body>
-</html>
+        const randomQuote = myQuotes[Math.floor(Math.random() * myQuotes.length)];
+        document.getElementById('quote-box').innerHTML = `"${randomQuote.text}" <span class="quote-author">— ${randomQuote.author}</span>`;
+    </script>
