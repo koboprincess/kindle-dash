@@ -62,39 +62,35 @@
                 document.getElementById('hi-lo-text').innerText = "";
             });
 
-        // 3. TODOIST (With Fixed Braces)
-        const TODOIST_TOKEN = "002dafd1a220f298022f4d5851a31240a45b7c0a";
+// 3. GOOGLE SHEETS LISTS
+const SHEET_URL = 'YOUR_CSV_URL_HERE';
 
-        async function updateDashboardTasks() {
-            try {
-                const sectionsRes = await fetch('https://api.todoist.com/rest/v2/sections', {
-                    headers: { 'Authorization': `Bearer ${TODOIST_TOKEN}` }
-                });
-                const sections = await sectionsRes.json();
-                const cookingSection = sections.find(s => s.name === "Cooking");
-                const REAL_ID = cookingSection ? cookingSection.id : null;
+async function updateDashboardTasks() {
+    try {
+        const response = await fetch(SHEET_URL);
+        const data = await response.text();
+        const rows = data.split('\n').slice(1); // Skip the header row
 
-                const res = await fetch('https://api.todoist.com/rest/v2/tasks', {
-                    headers: { 'Authorization': `Bearer ${TODOIST_TOKEN}` }
-                });
-                const allTasks = await res.json();
-                const todayStr = new Date().toISOString().split('T')[0];
+        let todayHtml = "";
+        let cookingHtml = "";
 
-                const todayTasks = allTasks.filter(t => t.due && t.due.date <= todayStr);
-                document.getElementById('todo-list-dinner').innerHTML = todayTasks.length > 0 
-                    ? todayTasks.slice(0, 8).map(t => `<div class="task-item">○ ${t.content}</div>`).join('')
-                    : '<div class="task-item">○ No tasks for today!</div>';
-
-                const cookingTasks = allTasks.filter(t => t.section_id === REAL_ID);
-                document.getElementById('todo-list-tasks').innerHTML = cookingTasks.length > 0 
-                    ? cookingTasks.slice(0, 8).map(t => `<div class="task-item">○ ${t.content}</div>`).join('')
-                    : '<div class="task-item">○ Nothing in the Cooking section!</div>';
-            } catch (e) {
-                console.error("Todoist Error:", e);
+        rows.forEach(row => {
+            const cols = row.split(',');
+            if (cols[0] && cols[0].trim()) {
+                todayHtml += `<div class="task-item">○ ${cols[0].trim()}</div>`;
             }
-        } // This closing brace was missing in index-12.html
-        
-        updateDashboardTasks();
+            if (cols[1] && cols[1].trim()) {
+                cookingHtml += `<div class="task-item">○ ${cols[1].trim()}</div>`;
+            }
+        });
+
+        document.getElementById('todo-list-dinner').innerHTML = todayHtml || "○ No tasks";
+        document.getElementById('todo-list-tasks').innerHTML = cookingHtml || "○ No tasks";
+    } catch (e) {
+        document.getElementById('todo-list-dinner').innerHTML = "Sheet Error";
+    }
+}
+updateDashboardTasks();
 
         // 4. QUOTE (Local Randomizer)
         const myQuotes = [
