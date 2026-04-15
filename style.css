@@ -145,7 +145,7 @@ body {
     text-align: center;
     
     /* Styling */
-    font-size: 48px; 
+    font-size: 40px; 
     line-height: 1.4; 
     font-style: italic; 
     background: #e0e0e0 !important; /* Slightly darker grey for better Kindle visibility */
@@ -157,7 +157,7 @@ body {
 
 .quote-author {
     display: block;
-    font-size: 38px;
+    font-size: 35px;
     font-style: normal;
     font-weight: bold;
     margin-top: 15px;
