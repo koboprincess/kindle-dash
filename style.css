@@ -126,29 +126,28 @@ body {
     font-size: 32px;
     margin-bottom: 12px;
 }
-
-/* 4. THE QUOTE BOX */
+/* 4. THE QUOTE BOX FIX */
 #quote-box { 
     grid-column: 1 / 3 !important; 
-    
-    /* FIX: Changed width from 100% to auto. 
-       'auto' tells the box to fill the available space 
-       WITHOUT pushing past the body's padding. */
-    width: 100% !important; 
+    width: 100%;
     box-sizing: border-box;
     
-    display: block; 
-    clear: both;
+    /* This brings back the box and centering */
+    display: flex !important;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
     text-align: center;
     
     /* Styling */
-    font-size: 45px; 
+    font-size: 48px; /* Boosted size */
     line-height: 1.4; 
     font-style: italic; 
-    background: #f4f4f4; 
-    padding: 30px; 
-    border-radius: 20px;
-    margin-top: 40px;
+    background: #f4f4f4 !important; /* Forces the grey box to appear */
+    padding: 40px; 
+    border-radius: 25px;
+    margin-top: 50px;
+    color: black;
 }
 
 .quote-author {
@@ -156,5 +155,6 @@ body {
     font-size: 38px;
     font-style: normal;
     font-weight: bold;
-    margin-top: 15px;
+    margin-top: 20px;
+    text-transform: uppercase;
 }
