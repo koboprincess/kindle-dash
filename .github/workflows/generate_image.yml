@@ -28,27 +28,30 @@ jobs:
           const path = require('path');
           (async () => {
             try {
+              console.log('Starting Puppeteer...');
               const browser = await puppeteer.launch({ 
-                executablePath: '/usr/bin/google-chrome', 
+                headless: 'new',
                 args: ['--no-sandbox', '--disable-setuid-sandbox', '--disable-web-security'] 
               });
               const page = await browser.newPage();
               await page.setViewport({ width: 1680, height: 1264 });
               
-              // Use path.join to create a bulletproof file URL
-              const filePath = 'file://' + path.join(process.cwd(), 'index-9.html');
-              console.log('Loading file: ' + filePath);
+              // Corrected filename to index.html
+              const filePath = 'file://' + path.resolve('index.html');
+              console.log('Attempting to load: ' + filePath);
               
               await page.goto(filePath, { waitUntil: 'networkidle0' });
 
-              // 10 second wait for your Todoist/Quote APIs
+              console.log('Page loaded. Waiting 10s for APIs...');
               await new Promise(r => setTimeout(r, 10000));
 
               await page.screenshot({ path: 'dashboard.png' });
+              console.log('Dashboard.png created successfully!');
+              
               await browser.close();
-              console.log('Screenshot saved successfully!');
             } catch (err) {
-              console.error(err);
+              console.error('ERROR DETECTED:');
+              console.error(err.message);
               process.exit(1);
             }
           })();
