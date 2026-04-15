@@ -30,29 +30,44 @@ body {
 }
 
 /* 2. THE HEADER (DATE + WEATHER) */
+/* 1. THE HEADER CONTAINER (The Anchor) */
 #header-container {
     grid-column: 1 / 3;
     width: 100%;
-    display: flex;
-    align-items: center;
-    position: relative; /* This is the anchor for the weather-box */
+    height: 100%;
+    position: relative; /* This allows the items inside to use coordinates */
 }
 
+/* 2. MANUALLY POSITION THE DATE */
 #date-box {
-    /* Stays on the far left */
-    text-align: left;
-    z-index: 2;
+    position: absolute;
+    
+    /* ADJUST THESE TO MOVE THE DATE */
+    top: 20px;   
+    left: 10px;  
+    
+    display: flex;
+    flex-direction: column;
 }
 
+#date {
+    font-size: 55px;
+    font-weight: bold;
+    text-transform: uppercase;
+    white-space: nowrap;
+}
+
+/* 3. MANUALLY POSITION THE WEATHER */
 #weather-box {
     position: absolute;
-    left: 50%; /* Moves the start of the box to the exact middle */
-    transform: translateX(-50%); /* Pulls the box back by half its own width to center it */
+    
+    /* ADJUST THESE TO MOVE THE WEATHER */
+    top: 10px;   
+    left: 700px; /* Increase to move right, decrease to move left */
     
     display: flex;
     align-items: center;
     gap: 20px;
-    z-index: 1;
 }
 
 #weather-icon { 
