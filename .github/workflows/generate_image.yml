@@ -1,8 +1,8 @@
-name: Generate Kindle Dash Image
+name: Generate Kindle Image
 on:
   schedule:
-    - cron: '*/30 * * * *' # Runs every 30 minutes
-  workflow_dispatch: # Allows you to trigger it manually for testing
+    - cron: '*/30 * * * *'
+  workflow_dispatch:
 
 jobs:
   screenshot:
@@ -10,47 +10,36 @@ jobs:
     permissions:
       contents: write
     steps:
-      - name: Checkout Code
+      - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Setup Node.js
+      - name: Setup Node
         uses: actions/setup-node@v4
         with:
           node-version: '20'
 
-      - name: Install Dependencies
+      - name: Install Puppeteer
         run: npm install puppeteer
 
-      - name: Take Dashboard Screenshot
+      - name: Take Screenshot
         run: |
           node -e "
           const puppeteer = require('puppeteer');
           (async () => {
-            const browser = await puppeteer.launch({ 
-              args: ['--no-sandbox', '--disable-setuid-sandbox'] 
-            });
+            const browser = await puppeteer.launch({ executablePath: '/usr/bin/google-chrome', args: ['--no-sandbox'] });
             const page = await browser.newPage();
-            
-            // Set viewport to your Kindle Oasis resolution
             await page.setViewport({ width: 1680, height: 1264 });
-            
-            // Load the local index.html file
-            await page.goto('file://${{ github.workspace }}/index.html', { 
-              waitUntil: 'networkidle0' // Wait for all API calls to finish
-            });
-
-            // Give it 2 extra seconds just to be sure data is rendered
+            await page.goto('file://${{ github.workspace }}/index.html', { waitUntil: 'networkidle0' });
             await new Promise(r => setTimeout(r, 2000));
-
             await page.screenshot({ path: 'dashboard.png' });
             await browser.close();
           })();
           "
 
-      - name: Commit and Push Image
+      - name: Commit and Push
         run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
           git add dashboard.png
-          git commit -m "Update dashboard image" || exit 0
+          git commit -m "Refresh image" || exit 0
           git push
