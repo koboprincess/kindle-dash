@@ -41,7 +41,7 @@
         // 1. DATE
         document.getElementById('date').innerText = new Date().toLocaleDateString('en-GB', { weekday: 'long', day: 'numeric', month: 'long' });
 
-        // 2. WEATHER
+        // 2. WEATHER (Updated for Hi/Lo)
         const WEATHER_KEY = "7b1b3a901f5152f5665f24f1385fb45f";
         const CITY = "Ballyforan"; 
 
@@ -49,12 +49,17 @@
             .then(res => res.json())
             .then(data => {
                 const temp = Math.round(data.main.temp);
+                const hi = Math.round(data.main.temp_max);
+                const lo = Math.round(data.main.temp_min);
                 const iconCode = data.weather[0].icon;
+
                 document.getElementById('temp-text').innerText = `${temp}°C`;
+                document.getElementById('hi-lo-text').innerText = `H: ${hi}° L: ${lo}°`;
                 document.getElementById('weather-icon').src = `https://openweathermap.org/img/wn/${iconCode}@2x.png`;
             })
             .catch(() => {
                 document.getElementById('temp-text').innerText = "N/A";
+                document.getElementById('hi-lo-text').innerText = "";
             });
 
 // 3. TODOIST (Updated with better error handling and CORS support)
