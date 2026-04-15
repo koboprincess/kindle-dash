@@ -36,7 +36,6 @@ jobs:
               const page = await browser.newPage();
               await page.setViewport({ width: 1680, height: 1264 });
               
-              // Corrected filename to index.html
               const filePath = 'file://' + path.resolve('index.html');
               console.log('Attempting to load: ' + filePath);
               
@@ -56,6 +55,20 @@ jobs:
             }
           })();
           "
+
+      - name: Convert for Kindle Screensaver
+        run: |
+          # This step makes the image compatible with jailbroken Kindle screensaver systems
+          sudo apt-get install -y imagemagick
+          convert dashboard.png -colorspace gray -depth 8 dashboard.png
+
+      - name: Commit and Push
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git add dashboard.png
+          git commit -m "Refresh dashboard image" || exit 0
+          git push
 
       - name: Commit and Push
         run: |
