@@ -17,7 +17,7 @@ body {
     /* ROW 1 (Weather): ends at 150px 
        ROW 2 (Tasks): ends at 700px 
        ROW 3 (Quote): stays at the bottom */
-    grid-template-rows: 150px 700px auto;
+    grid-template-rows: 150px 500px auto;
     /* This ensures the grid fills the whole 1448px width */
     width: 1680px;
     gap: 0; 
@@ -60,7 +60,7 @@ body {
 /* 3. CONTENT COLUMNS */
 :root {
     /* Edit this number to change the length of both lines at once */
-    --header-line-length: 600px; 
+    --header-line-length: 800px; 
 }
 
 /* 3. CONTENT COLUMNS */
@@ -113,7 +113,7 @@ body {
     line-height: 1.4; 
     font-style: italic; 
     background: #f4f4f4; 
-    padding: 40px; 
+    padding: 20px; 
     border-radius: 20px;
     margin-top: 20px;
 }
