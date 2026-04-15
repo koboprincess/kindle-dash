@@ -14,7 +14,10 @@ body {
        If you want to move the line left or right, change these ratios 
        (e.g., 0.8fr 1.2fr moves the line to the left) */
     grid-template-columns: 1fr 1fr; 
-    
+    /* ROW 1 (Weather): ends at 150px 
+       ROW 2 (Tasks): ends at 700px 
+       ROW 3 (Quote): stays at the bottom */
+    grid-template-rows: 150px 700px auto;
     /* This ensures the grid fills the whole 1448px width */
     width: 1680px;
     gap: 0; 
