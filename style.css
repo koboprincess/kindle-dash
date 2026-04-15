@@ -23,7 +23,7 @@ body {
     /* ROW 1 (Weather): ends at 150px 
        ROW 2 (Tasks): ends at 700px 
        ROW 3 (Quote): stays at the bottom */
-    grid-template-rows: 200px 650px auto;
+    grid-template-rows: 200px 750px auto;
     /* This ensures the grid fills the whole 1448px width */
     gap: 0; 
     overflow: hidden;
@@ -56,7 +56,7 @@ body {
     position: absolute;
     
     /* --- MANUALLY MOVE WEATHER HERE --- */
-    top: 15px;    /* Distance from top edge */
+    top: 20px;    /* Distance from top edge */
     left: 1200px;  /* 840 is exactly half of 1680px */
     
     /* This centers the box on the coordinate so '840' is the middle of the icon/temp */
@@ -85,7 +85,7 @@ body {
 }
 
 #hi-lo-text { 
-    font-size: 32px;
+    font-size: 40px;
     font-weight: bold;
 }
 
@@ -99,7 +99,7 @@ body {
 .left-col { 
     grid-column: 1;
     padding-right: 40px; /* Space before the center line */
-    padding-left: 40px;
+    padding-left: 0px;
     text-align: left;
 }
 
