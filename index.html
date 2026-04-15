@@ -95,7 +95,7 @@
         }
         updateDashboardTasks();
 
-        // 4. QUOTE (Fixed List and Closing Tags)
+// 4. QUOTE (Local Randomizer - No API required)
         const myQuotes = [
             { text: "The secret of getting ahead is getting started.", author: "Mark Twain" },
             { text: "It’s not whether you get knocked down, it’s whether you get up.", author: "Vince Lombardi" },
@@ -152,3 +152,5 @@
         const randomQuote = myQuotes[Math.floor(Math.random() * myQuotes.length)];
         document.getElementById('quote-box').innerHTML = `"${randomQuote.text}" <span class="quote-author">— ${randomQuote.author}</span>`;
     </script>
+</body>
+</html>
