@@ -29,10 +29,16 @@ jobs:
           (async () => {
             try {
               console.log('Starting Puppeteer...');
-              const browser = await puppeteer.launch({ 
-                headless: 'new',
-                args: ['--no-sandbox', '--disable-setuid-sandbox', '--disable-web-security'] 
-              });
+              // In your generate_image.yml, update the launch args:
+          const browser = await puppeteer.launch({ 
+            headless: 'new',
+            args: [
+              '--no-sandbox', 
+              '--disable-setuid-sandbox', 
+              '--disable-web-security', // This should help
+              '--allow-file-access-from-files' // Add this
+            ] 
+          });
               const page = await browser.newPage();
               await page.setViewport({ width: 1680, height: 1264 });
               
