@@ -62,6 +62,12 @@ body {
     /* This centers the box on the coordinate so '840' is the middle of the icon/temp */
     /*transform: translateX(-50%); */
     
+    /* THE BOX STYLING (Matches Quote Box) */
+    background-color: #e0e0e0 !important; /* Matching grey */
+    padding: 20px 30px; /* 20px top/bottom, 30px sides */
+    border-radius: 20px;
+    border: 2px solid black; /* Optional: adds a crisp edge for E-ink */
+    
     display: flex;
     align-items: center;
     gap: 25px;
