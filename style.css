@@ -25,7 +25,6 @@ body {
        ROW 3 (Quote): stays at the bottom */
     grid-template-rows: 200px 650px auto;
     /* This ensures the grid fills the whole 1448px width */
-    width: 1680px;
     gap: 0; 
     overflow: hidden;
 }
