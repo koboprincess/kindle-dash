@@ -94,16 +94,17 @@ async function updateDashboardTasks() {
 
 updateDashboardTasks();
 
-        // 4. QUOTE
-        fetch('https://api.allorigins.win/get?url=' + encodeURIComponent('https://api.quotable.io/random'))
-            .then(res => res.json())
-            .then(json => {
-                const data = JSON.parse(json.contents);
-                document.getElementById('quote-box').innerHTML = `"${data.content}" <span class="quote-author">— ${data.author}</span>`;
-            })
-            .catch(() => {
-                document.getElementById('quote-box').innerHTML = `"The best way to predict the future is to create it." <span class="quote-author">— Peter Drucker</span>`;
-            });
+// 4. QUOTE (Using Quoteslate API - no proxy needed)
+fetch('https://quoteslate.vercel.app/api/quotes/random')
+    .then(res => res.json())
+    .then(data => {
+        // Quoteslate uses .quote and .author
+        document.getElementById('quote-box').innerHTML = `"${data.quote}" <span class="quote-author">— ${data.author}</span>`;
+    })
+    .catch(() => {
+        // Fallback if the API is slow or down
+        document.getElementById('quote-box').innerHTML = `"The best way to predict the future is to create it." <span class="quote-author">— Peter Drucker</span>`;
+    });
     </script>
 </body>
 </html>
