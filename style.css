@@ -10,7 +10,7 @@ body {
     box-sizing: border-box;
     display: grid;
     /* Explicitly define 2 columns */
-    grid-template-columns: 700px 700px; 
+    grid-template-columns: 500px 500px; 
     /* Header, Lists, and Quote rows */
     grid-template-rows: 150px 780px 250px; 
     gap: 40px;
@@ -61,7 +61,7 @@ body {
 .right-col { 
     grid-column: 2;
     border-left: 6px solid black; 
-    padding-left: 60px; 
+    padding-left: 0px; 
     /* Add padding-right to match the left-most edge of the screen */
     padding-right: 40px; 
     height: 500px;
