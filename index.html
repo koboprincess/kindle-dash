@@ -41,7 +41,7 @@
         // 1. DATE
         document.getElementById('date').innerText = new Date().toLocaleDateString('en-GB', { weekday: 'long', day: 'numeric', month: 'long' });
 
-        // 2. WEATHER (Corrected Hi/Lo)
+        // 2. WEATHER (Hi/Lo Logic)
         const WEATHER_KEY = "7b1b3a901f5152f5665f24f1385fb45f";
         const CITY = "Ballyforan"; 
 
@@ -62,7 +62,7 @@
                 document.getElementById('hi-lo-text').innerText = "";
             });
 
-        // 3. TODOIST (With Safety Braces)
+        // 3. TODOIST (With Fixed Braces)
         const TODOIST_TOKEN = "002dafd1a220f298022f4d5851a31240a45b7c0a";
 
         async function updateDashboardTasks() {
@@ -92,7 +92,7 @@
             } catch (e) {
                 console.error("Todoist Error:", e);
             }
-        } // <--- THIS WAS THE MISSING BRACE causing the script to crash
+        } // This closing brace was missing in index-12.html
         
         updateDashboardTasks();
 
@@ -153,5 +153,3 @@
         const randomQuote = myQuotes[Math.floor(Math.random() * myQuotes.length)];
         document.getElementById('quote-box').innerHTML = `"${randomQuote.text}" <span class="quote-author">— ${randomQuote.author}</span>`;
     </script>
-</body>
-</html>
