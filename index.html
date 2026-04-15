@@ -54,32 +54,33 @@
                 document.getElementById('temp-text').innerText = "N/A";
             });
 
-// 3. TODOIST (Left: Today | Right: Cooking Section)
+// 3. TODOIST (Updated with better error handling and CORS support)
 const TODOIST_TOKEN = "002dafd1a220f298022f4d5851a31240a45b7c0a";
-const COOKING_SECTION_ID = "6gPJMqP3cm3JvJw3"; // This is your specific ID
+const COOKING_SECTION_ID = "6gPJMqP3cm3JvJw3";
 
 async function updateDashboardTasks() {
     try {
         const res = await fetch('https://api.todoist.com/rest/v2/tasks', {
-            headers: { 'Authorization': `Bearer ${TODOIST_TOKEN}` }
+            method: 'GET',
+            headers: { 
+                'Authorization': `Bearer ${TODOIST_TOKEN}`,
+                'Content-Type': 'application/json'
+            }
         });
-        const allTasks = await res.json();
         
-        // Get today's date in YYYY-MM-DD format
+        if (!res.ok) throw new Error('Todoist API responded with ' + res.status);
+        
+        const allTasks = await res.json();
         const todayStr = new Date().toISOString().split('T')[0];
 
-        // --- 1. FILTER FOR TODAY (LEFT COLUMN: todo-list-dinner) ---
-        const todayTasks = allTasks.filter(t => {
-            return t.due && t.due.date <= todayStr; 
-        });
-
+        // Filter for Today
+        const todayTasks = allTasks.filter(t => t.due && t.due.date <= todayStr);
         document.getElementById('todo-list-dinner').innerHTML = todayTasks.length > 0 
             ? todayTasks.slice(0, 8).map(t => `<div class="task-item">○ ${t.content}</div>`).join('')
             : '<div class="task-item">○ No tasks for today!</div>';
 
-        // --- 2. FILTER FOR COOKING SECTION (RIGHT COLUMN: todo-list-tasks) ---
+        // Filter for Cooking Section
         const cookingTasks = allTasks.filter(t => t.section_id === COOKING_SECTION_ID);
-
         document.getElementById('todo-list-tasks').innerHTML = cookingTasks.length > 0 
             ? cookingTasks.slice(0, 8).map(t => `<div class="task-item">○ ${t.content}</div>`).join('')
             : '<div class="task-item">○ Nothing in the Cooking section!</div>';
