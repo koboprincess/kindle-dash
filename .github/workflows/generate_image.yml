@@ -59,7 +59,7 @@ jobs:
       - name: Convert for Kindle
         run: |
           sudo apt-get install -y imagemagick
-          convert dashboard.png -resize 1072x1448^ -gravity center -extent 1072x1448 -colorspace gray -depth 8 -type Grayscale -strip PNG8:dashboard.png
+          convert dashboard.png -rotate 90 -resize 1072x1448! -colorspace gray -depth 8 -type Grayscale -strip PNG8:dashboard.png
 
       - name: Commit and Push
         run: |
