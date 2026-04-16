@@ -1,229 +1,229 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Fridge Dash</title>
-    <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <title>Fridge Dash</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-    <div id="header-container">
-        <div id="info-box-left" class="grey-box">
-            <div id="date">Loading date...</div>
-            <div id="moon-phase"></div>
-        </div>
+    <div id="header-container">
+        <div id="info-box-left" class="grey-box">
+            <div id="date">Loading date...</div>
+            <div id="moon-phase"></div>
+        </div>
 
-        <div id="weather-box">
-            <img id="weather-icon" src="" alt="">
-            <div class="temp-container">
-                <span id="temp-text">--°C</span>
-                <div id="hi-lo-text">H: --° L: --°</div>
-            </div>
-        </div>
-    </div>
+        <div id="weather-box">
+            <img id="weather-icon" src="" alt="">
+            <div class="temp-container">
+                <span id="temp-text">--°C</span>
+                <div id="hi-lo-text">H: --° L: --°</div>
+            </div>
+        </div>
+    </div>
 
-    <div class="left-col">
-        <div class="todo-section">
-            <div class="todo-title">Cooking</div>
-            <div id="todo-list-dinner">Loading menu...</div>
-        </div>
-    </div>
+    <div class="main-container" style="display: flex;">
+        
+        <div class="left-col">
+            <div class="todo-section">
+                <div class="todo-title">Cooking</div>
+                <div id="todo-list-dinner">Loading menu...</div>
+            </div>
+        </div>
 
-    <div class="middle-col">
-        <div class="todo-section">
-            <div class="todo-title">To Do</div>
-            <div id="todo-list-tasks">Loading tasks...</div>
-        </div>
-    </div>
-    
-    <div class="right-col-2">
-        <div class="todo-section">
-            <div class="todo-title">Reminders</div>
-            <div id="reminders-list">
-                <div class="task-item">○ Pick up milk</div>
-                <div class="task-item">○ Call Mom</div>
-            </div> 
-        </div>
-    </div>
+        <div class="middle-col">
+            <div class="todo-section">
+                <div class="todo-title">To Do</div>
+                <div id="todo-list-tasks">Loading tasks...</div>
+            </div>
+        </div>
+        
+        <div class="right-col-2">
+        <div class="todo-section">
+            <div class="todo-title">Reminders</div>
+            <div id="reminders-list">○ Pick up milk<br>○ Call Mom</div> 
+        </div>
+    </div>
 
-    <div id="quote-box"></div>
+    </div> <div id="quote-box"></div>
 
-    <script>
-    
-    // 1. DATE
-    document.getElementById('date').innerText = new Date().toLocaleDateString('en-GB', { 
-        weekday: 'short', 
-        day: 'numeric', 
-        month: 'long' 
-    });
-    // --- ADD THE MOON CODE DIRECTLY BELOW THE DATE ---
-    function getMoonPhase() {
-    const now = new Date();
-    const lp = 2551443; // Lunar period in seconds
-    const new_moon = new Date(1970, 0, 7, 20, 35, 0);
-    const phase = ((now.getTime() - new_moon.getTime()) / 1000) % lp;
-    const age = Math.floor(phase / (24 * 3600)) + 1;
+    <script>
+    
+    // 1. DATE
+    document.getElementById('date').innerText = new Date().toLocaleDateString('en-GB', { 
+        weekday: 'short', 
+        day: 'numeric', 
+        month: 'long' 
+    });
+    // --- ADD THE MOON CODE DIRECTLY BELOW THE DATE ---
+    function getMoonPhase() {
+    const now = new Date();
+    const lp = 2551443; // Lunar period in seconds
+    const new_moon = new Date(1970, 0, 7, 20, 35, 0);
+    const phase = ((now.getTime() - new_moon.getTime()) / 1000) % lp;
+    const age = Math.floor(phase / (24 * 3600)) + 1;
 
-    // Calculate illumination percentage (0 to 100)
-    // 0 or 29.5 is New Moon (0%), 14.75 is Full Moon (100%)
-    const percent = Math.abs((phase / lp) * 2 - 1);
-    const illumination = Math.round((1 - percent) * 100);
+    // Calculate illumination percentage (0 to 100)
+    // 0 or 29.5 is New Moon (0%), 14.75 is Full Moon (100%)
+    const percent = Math.abs((phase / lp) * 2 - 1);
+    const illumination = Math.round((1 - percent) * 100);
 
-    let moonData = { name: "", icon: "", percent: illumination };
+    let moonData = { name: "", icon: "", percent: illumination };
 
-    if (age <= 1) moonData = { ...moonData, name: "New Moon", icon: "🌑" };
-    else if (age <= 6) moonData = { ...moonData, name: "Waxing Crescent", icon: "🌒" };
-    else if (age <= 9) moonData = { ...moonData, name: "First Quarter", icon: "🌓" };
-    else if (age <= 14) moonData = { ...moonData, name: "Waxing Gibbous", icon: "🌔" };
-    else if (age <= 16) moonData = { ...moonData, name: "Full Moon", icon: "🌕" };
-    else if (age <= 21) moonData = { ...moonData, name: "Waning Gibbous", icon: "🌖" };
-    else if (age <= 24) moonData = { ...moonData, name: "Last Quarter", icon: "🌗" };
-    else if (age <= 28) moonData = { ...moonData, name: "Waning Crescent", icon: "🌘" };
-    else moonData = { ...moonData, name: "New Moon", icon: "🌑" };
+    if (age <= 1) moonData = { ...moonData, name: "New Moon", icon: "🌑" };
+    else if (age <= 6) moonData = { ...moonData, name: "Waxing Crescent", icon: "🌒" };
+    else if (age <= 9) moonData = { ...moonData, name: "First Quarter", icon: "🌓" };
+    else if (age <= 14) moonData = { ...moonData, name: "Waxing Gibbous", icon: "🌔" };
+    else if (age <= 16) moonData = { ...moonData, name: "Full Moon", icon: "🌕" };
+    else if (age <= 21) moonData = { ...moonData, name: "Waning Gibbous", icon: "🌖" };
+    else if (age <= 24) moonData = { ...moonData, name: "Last Quarter", icon: "🌗" };
+    else if (age <= 28) moonData = { ...moonData, name: "Waning Crescent", icon: "🌘" };
+    else moonData = { ...moonData, name: "New Moon", icon: "🌑" };
 
-    return moonData;
+    return moonData;
 }
 
 // Display the moon phase with percentage
 const moon = getMoonPhase();
 document.getElementById('moon-phase').innerHTML = `
-    <span class="moon-icon">${moon.icon}</span> 
-    <div class="moon-details">
-        <div class="moon-name">${moon.name}</div>
-        <div class="moon-percent">${moon.percent}%</div>
-    </div>
+    <span class="moon-icon">${moon.icon}</span> 
+    <div class="moon-details">
+        <div class="moon-name">${moon.name}</div>
+        <div class="moon-percent">${moon.percent}%</div>
+    </div>
 `;
 
 // 2. WEATHER (feels like & wind speed) - Updated for Custom Icons
-        const WEATHER_KEY = "7b1b3a901f5152f5665f24f1385fb45f";
-        const CITY = "Ballyforan"; 
+        const WEATHER_KEY = "7b1b3a901f5152f5665f24f1385fb45f";
+        const CITY = "Ballyforan"; 
 
-        fetch(`https://api.openweathermap.org/data/2.5/weather?q=${CITY}&appid=${WEATHER_KEY}&units=metric`)
-            .then(res => res.json())
-            .then(data => {
-                const temp = Math.round(data.main.temp);
-                const feelsLike = Math.round(data.main.feels_like); // Gets Real Feel
-                const windKmH = Math.round(data.wind.speed * 3.6); // Converts m/s to km/h
-                const iconCode = data.weather[0].icon;
+        fetch(`https://api.openweathermap.org/data/2.5/weather?q=${CITY}&appid=${WEATHER_KEY}&units=metric`)
+            .then(res => res.json())
+            .then(data => {
+                const temp = Math.round(data.main.temp);
+                const feelsLike = Math.round(data.main.feels_like); // Gets Real Feel
+                const windKmH = Math.round(data.wind.speed * 3.6); // Converts m/s to km/h
+                const iconCode = data.weather[0].icon;
 
-                // Create a mapping to reuse your uploaded icons
-                const iconMap = {
-                    "04d": "03d",  // Uses your 03d.png for overcast clouds
-                    "03n": "02n",  // Uses your 02n.png for cloudy night
-                    "04n": "02n",  // Uses your 02n.png for overcast night
-                    "09n": "09d",  // Uses your 09d.png (rain) for night rain
-                    "10d": "09d",  // Map moderate rain to your existing rain icon
-                    "10n": "09d",  // Map moderate night rain to your existing rain icon
-                    "11n": "11d",  // Uses your 11d.png (storm) for night storm
-                    "13n": "13d",  // Uses your 13d.png (snow) for night snow
-                    "50n": "50d"   // Uses your 50d.png (wind/mist) for night mist
-                };
+                // Create a mapping to reuse your uploaded icons
+                const iconMap = {
+                    "04d": "03d",  // Uses your 03d.png for overcast clouds
+                    "03n": "02n",  // Uses your 02n.png for cloudy night
+                    "04n": "02n",  // Uses your 02n.png for overcast night
+                    "09n": "09d",  // Uses your 09d.png (rain) for night rain
+                    "10d": "09d",  // Map moderate rain to your existing rain icon
+                    "10n": "09d",  // Map moderate night rain to your existing rain icon
+                    "11n": "11d",  // Uses your 11d.png (storm) for night storm
+                    "13n": "13d",  // Uses your 13d.png (snow) for night snow
+                    "50n": "50d"   // Uses your 50d.png (wind/mist) for night mist
+                };
 
-                // Use the mapped name if it exists, otherwise use the original iconCode
-                const finalIcon = iconMap[iconCode] || iconCode;
+                // Use the mapped name if it exists, otherwise use the original iconCode
+                const finalIcon = iconMap[iconCode] || iconCode;
 
-                document.getElementById('temp-text').innerText = `${temp}°C`;
-                document.getElementById('hi-lo-text').innerHTML = `<b>Feels:</b> ${feelsLike}°<br><b>Wind:</b> ${windKmH} km/h`;
-                
-                // Point directly to your local files (e.g., 01d.png)
-                document.getElementById('weather-icon').src = `icons/${finalIcon}.png`;
-            })
-            .catch(() => {
-                document.getElementById('temp-text').innerText = "N/A";
-                document.getElementById('hi-lo-text').innerText = "";
-            });
+                document.getElementById('temp-text').innerText = `${temp}°C`;
+                document.getElementById('hi-lo-text').innerHTML = `<b>Feels:</b> ${feelsLike}°<br><b>Wind:</b> ${windKmH} km/h`;
+                
+                // Point directly to your local files (e.g., 01d.png)
+                document.getElementById('weather-icon').src = `icons/${finalIcon}.png`;
+            })
+            .catch(() => {
+                document.getElementById('temp-text').innerText = "N/A";
+                document.getElementById('hi-lo-text').innerText = "";
+            });
 
 // 3. GOOGLE SHEETS LISTS
 const SHEET_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vS-LRwu3aSW2J2pq4AnpUAjySLn6EkEVmGK_tOw16uyotwu49164_bT2-xANsMr8w9aLHAdfM8erHUJ/pub?gid=0&single=true&output=csv';
 
 async function updateDashboardTasks() {
-    try {
-        const response = await fetch(SHEET_URL);
-        const data = await response.text();
-        const rows = data.split('\n').slice(1); // Skip the header row
+    try {
+        const response = await fetch(SHEET_URL);
+        const data = await response.text();
+        const rows = data.split('\n').slice(1); // Skip the header row
 
-        let todayHtml = "";
-        let cookingHtml = "";
+        let todayHtml = "";
+        let cookingHtml = "";
 
-        rows.forEach(row => {
-            const cols = row.split(',');
-            if (cols[0] && cols[0].trim()) {
-                todayHtml += `<div class="task-item">○ ${cols[0].trim()}</div>`;
-            }
-            if (cols[2] && cols[2].trim()) { // Pulls from Column C
-                remindersHtml += `<div class="task-item">○ ${cols[2].trim()}</div>`;
-            }
-        });
+        rows.forEach(row => {
+            const cols = row.split(',');
+            if (cols[0] && cols[0].trim()) {
+                todayHtml += `<div class="task-item">○ ${cols[0].trim()}</div>`;
+            }
+            if (cols[1] && cols[1].trim()) {
+                cookingHtml += `<div class="task-item">○ ${cols[1].trim()}</div>`;
+            }
+        });
 
-        document.getElementById('todo-list-dinner').innerHTML = todayHtml || "○ No tasks";
-        document.getElementById('todo-list-tasks').innerHTML = cookingHtml || "○ No tasks";
-        document.getElementById('reminders-list').innerHTML = remindersHtml || "○ No tasks"; // NEW
-    }
+        document.getElementById('todo-list-dinner').innerHTML = todayHtml || "○ No tasks";
+        document.getElementById('todo-list-tasks').innerHTML = cookingHtml || "○ No tasks";
+    } catch (e) {
+        document.getElementById('todo-list-dinner').innerHTML = "Sheet Error";
+    }
 }
 updateDashboardTasks();
 
-        // 4. QUOTE (Local Randomizer)
-        const myQuotes = [
-            { text: "The secret of getting ahead is getting started.", author: "Mark Twain" },
-            { text: "It’s not whether you get knocked down, it’s whether you get up.", author: "Vince Lombardi" },
-            { text: "The only way to do great work is to love what you do.", author: "Steve Jobs" },
-            { text: "Don’t count the days, make the days count.", author: "Muhammad Ali" },
-            { text: "Everything you’ve ever wanted is on the other side of fear.", author: "George Addair" },
-            { text: "Success is not final, failure is not fatal: it is the courage to continue that counts.", author: "Winston Churchill" },
-            { text: "Hardships often prepare ordinary people for an extraordinary destiny.", author: "C.S. Lewis" },
-            { text: "Believe you can and you're halfway there.", author: "Theodore Roosevelt" },
-            { text: "Your talent determines what you can do. Your motivation determines how much you are willing to do.", author: "Lou Holtz" },
-            { text: "The only person you are destined to become is the person you decide to be.", author: "Ralph Waldo Emerson" },
-            { text: "I find that the harder I work, the more luck I seem to have.", author: "Thomas Jefferson" },
-            { text: "Opportunities don't happen. You create them.", author: "Chris Grosser" },
-            { text: "Don't be afraid to give up the good to go for the great.", author: "John D. Rockefeller" },
-            { text: "I never dreamed about success. I worked for it.", author: "Estée Lauder" },
-            { text: "Great things are done by a series of small things brought together.", author: "Vincent Van Gogh" },
-            { text: "The successful warrior is the average man, with laser-like focus.", author: "Bruce Lee" },
-            { text: "Action is the foundational key to all success.", author: "Pablo Picasso" },
-            { text: "Don’t let yesterday take up too much of today.", author: "Will Rogers" },
-            { text: "The best time to plant a tree was 20 years ago. The second best time is now.", author: "Chinese Proverb" },
-            { text: "Whether you think you can or you think you can’t, you’re right.", author: "Henry Ford" },
-            { text: "Small deeds done are better than great deeds planned.", author: "Peter Marshall" },
-            { text: "The road to success is always under construction.", author: "Lily Tomlin" },
-            { text: "Consistency is more important than perfection.", author: "Unknown" },
-            { text: "Don't stop when you're tired. Stop when you're done.", author: "David Goggins" },
-            { text: "If you are going through hell, keep going.", author: "Winston Churchill" },
-            { text: "Discipline is choosing between what you want now and what you want most.", author: "Abraham Lincoln" },
-            { text: "Focus on being productive instead of busy.", author: "Tim Ferriss" },
-            { text: "You don’t have to be great to start, but you have to start to be great.", author: "Zig Ziglar" },
-            { text: "Everything is hard before it is easy.", author: "Goethe" },
-            { text: "What we fear of doing most is usually what we most need to do.", author: "Ralph Waldo Emerson" },
-            { text: "One day or day one. You decide.", author: "Unknown" },
-            { text: "The future depends on what you do today.", author: "Mahatma Gandhi" },
-            { text: "It always seems impossible until it's done.", author: "Nelson Mandela" },
-            { text: "Success is the sum of small efforts, repeated day in and day out.", author: "Robert Collier" },
-            { text: "Energy and persistence conquer all things.", author: "Benjamin Franklin" },
-            { text: "The distance between insanity and genius is measured only by success.", author: "Bruce Feirstein" },
-            { text: "Motivation is what gets you started. Habit is what keeps you going.", author: "Jim Ryun" },
-            { text: "Fall seven times, stand up eight.", author: "Japanese Proverb" },
-            { text: "Your time is limited, so don't waste it living someone else's life.", author: "Steve Jobs" },
-            { text: "Start where you are. Use what you have. Do what you can.", author: "Arthur Ashe" },
-            { text: "Don’t wait for opportunity. Create it.", author: "Unknown" },
-            { text: "Dream big and dare to fail.", author: "Norman Vaughan" },
-            { text: "Do one thing every day that scares you.", author: "Eleanor Roosevelt" },
-            { text: "What you do speaks so loudly that I cannot hear what you say.", author: "Ralph Waldo Emerson" },
-            { text: "Tough times never last, but tough people do.", author: "Robert Schuller" },
-            { text: "The power of imagination makes us infinite.", author: "John Muir" },
-            { text: "Efficiency is doing things right; effectiveness is doing the right things.", author: "Peter Drucker" },
-            { text: "Quality is not an act, it is a habit.", author: "Aristotle" },
-            { text: "Keep your face always toward the sunshine—and shadows will fall behind you.", author: "Walt Whitman" },
-            { text: "You miss 100% of the shots you don’t take.", author: "Wayne Gretzky" }
-        ];
+        // 4. QUOTE (Local Randomizer)
+        const myQuotes = [
+            { text: "The secret of getting ahead is getting started.", author: "Mark Twain" },
+            { text: "It’s not whether you get knocked down, it’s whether you get up.", author: "Vince Lombardi" },
+            { text: "The only way to do great work is to love what you do.", author: "Steve Jobs" },
+            { text: "Don’t count the days, make the days count.", author: "Muhammad Ali" },
+            { text: "Everything you’ve ever wanted is on the other side of fear.", author: "George Addair" },
+            { text: "Success is not final, failure is not fatal: it is the courage to continue that counts.", author: "Winston Churchill" },
+            { text: "Hardships often prepare ordinary people for an extraordinary destiny.", author: "C.S. Lewis" },
+            { text: "Believe you can and you're halfway there.", author: "Theodore Roosevelt" },
+            { text: "Your talent determines what you can do. Your motivation determines how much you are willing to do.", author: "Lou Holtz" },
+            { text: "The only person you are destined to become is the person you decide to be.", author: "Ralph Waldo Emerson" },
+            { text: "I find that the harder I work, the more luck I seem to have.", author: "Thomas Jefferson" },
+            { text: "Opportunities don't happen. You create them.", author: "Chris Grosser" },
+            { text: "Don't be afraid to give up the good to go for the great.", author: "John D. Rockefeller" },
+            { text: "I never dreamed about success. I worked for it.", author: "Estée Lauder" },
+            { text: "Great things are done by a series of small things brought together.", author: "Vincent Van Gogh" },
+            { text: "The successful warrior is the average man, with laser-like focus.", author: "Bruce Lee" },
+            { text: "Action is the foundational key to all success.", author: "Pablo Picasso" },
+            { text: "Don’t let yesterday take up too much of today.", author: "Will Rogers" },
+            { text: "The best time to plant a tree was 20 years ago. The second best time is now.", author: "Chinese Proverb" },
+            { text: "Whether you think you can or you think you can’t, you’re right.", author: "Henry Ford" },
+            { text: "Small deeds done are better than great deeds planned.", author: "Peter Marshall" },
+            { text: "The road to success is always under construction.", author: "Lily Tomlin" },
+            { text: "Consistency is more important than perfection.", author: "Unknown" },
+            { text: "Don't stop when you're tired. Stop when you're done.", author: "David Goggins" },
+            { text: "If you are going through hell, keep going.", author: "Winston Churchill" },
+            { text: "Discipline is choosing between what you want now and what you want most.", author: "Abraham Lincoln" },
+            { text: "Focus on being productive instead of busy.", author: "Tim Ferriss" },
+            { text: "You don’t have to be great to start, but you have to start to be great.", author: "Zig Ziglar" },
+            { text: "Everything is hard before it is easy.", author: "Goethe" },
+            { text: "What we fear of doing most is usually what we most need to do.", author: "Ralph Waldo Emerson" },
+            { text: "One day or day one. You decide.", author: "Unknown" },
+            { text: "The future depends on what you do today.", author: "Mahatma Gandhi" },
+            { text: "It always seems impossible until it's done.", author: "Nelson Mandela" },
+            { text: "Success is the sum of small efforts, repeated day in and day out.", author: "Robert Collier" },
+            { text: "Energy and persistence conquer all things.", author: "Benjamin Franklin" },
+            { text: "The distance between insanity and genius is measured only by success.", author: "Bruce Feirstein" },
+            { text: "Motivation is what gets you started. Habit is what keeps you going.", author: "Jim Ryun" },
+            { text: "Fall seven times, stand up eight.", author: "Japanese Proverb" },
+            { text: "Your time is limited, so don't waste it living someone else's life.", author: "Steve Jobs" },
+            { text: "Start where you are. Use what you have. Do what you can.", author: "Arthur Ashe" },
+            { text: "Don’t wait for opportunity. Create it.", author: "Unknown" },
+            { text: "Dream big and dare to fail.", author: "Norman Vaughan" },
+            { text: "Do one thing every day that scares you.", author: "Eleanor Roosevelt" },
+            { text: "What you do speaks so loudly that I cannot hear what you say.", author: "Ralph Waldo Emerson" },
+            { text: "Tough times never last, but tough people do.", author: "Robert Schuller" },
+            { text: "The power of imagination makes us infinite.", author: "John Muir" },
+            { text: "Efficiency is doing things right; effectiveness is doing the right things.", author: "Peter Drucker" },
+            { text: "Quality is not an act, it is a habit.", author: "Aristotle" },
+            { text: "Keep your face always toward the sunshine—and shadows will fall behind you.", author: "Walt Whitman" },
+            { text: "You miss 100% of the shots you don’t take.", author: "Wayne Gretzky" }
+        ];
 
-        // Get a unique number for today (YYYYMMDD)
-        const now = new Date();
-        const dateSeed = now.getFullYear() * 10000 + (now.getMonth() + 1) * 100 + now.getDate();
+        // Get a unique number for today (YYYYMMDD)
+        const now = new Date();
+        const dateSeed = now.getFullYear() * 10000 + (now.getMonth() + 1) * 100 + now.getDate();
 
-        // Use the seed to pick the same quote all day
-        // The modulo operator (%) ensures the number stays within the range of your list
-        const dailyIndex = dateSeed % myQuotes.length;
-        const dailyQuote = myQuotes[dailyIndex];
+        // Use the seed to pick the same quote all day
+        // The modulo operator (%) ensures the number stays within the range of your list
+        const dailyIndex = dateSeed % myQuotes.length;
+        const dailyQuote = myQuotes[dailyIndex];
 
-        document.getElementById('quote-box').innerHTML = `"${dailyQuote.text}" <span class="quote-author">— ${dailyQuote.author}</span>`
-    </script>
+        document.getElementById('quote-box').innerHTML = `"${dailyQuote.text}" <span class="quote-author">— ${dailyQuote.author}</span>`
+    </script>
