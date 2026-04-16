@@ -24,7 +24,7 @@ body {
        ROW 2 (Tasks): ends at 700px 
        ROW 3 (Quote): stays at the bottom */
     grid-template-rows: 200px 750px auto;
-    /* This ensures the grid fills the whole 1448px width */
+    /* This ensures the grid fills the whole 1680px width */
     gap: 0; 
     overflow: hidden;
 }
@@ -46,7 +46,7 @@ body {
     left: 0px;  /* Distance from left edge */
     
     /* Font Styling */
-    font-size: 60px; 
+    font-size: 70px; 
     font-weight: bold;
     text-transform: uppercase;
 }
