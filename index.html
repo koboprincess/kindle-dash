@@ -41,23 +41,40 @@
         // 1. DATE
         document.getElementById('date').innerText = new Date().toLocaleDateString('en-GB', { weekday: 'long', day: 'numeric', month: 'long' });
 
-// 2. WEATHER (Updated for Real Feel, Wind km/h, and Custom Icons)
-const WEATHER_KEY = "7b1b3a901f5152f5665f24f1385fb45f";
-const CITY = "Ballyforan"; 
+// 2. WEATHER (Real Feel, Wind, and FOLDER Path)
+        const WEATHER_KEY = "7b1b3a901f5152f5665f24f1385fb45f";
+        const CITY = "Ballyforan"; 
 
-fetch(`https://api.openweathermap.org/data/2.5/weather?q=${CITY}&appid=${WEATHER_KEY}&units=metric`)
-    .then(res => res.json())
-    .then(data => {
-        // Current Temp
-        const temp = Math.round(data.main.temp);
-        
-        // 1. Get Real Feel
-        const feelsLike = Math.round(data.main.feels_like);
-        
-        // 2. Get Wind Speed and convert m/s to km/h
-        const windKmH = Math.round(data.wind.speed * 3.6);
-        
-        const iconCode = data.weather[0].icon;
+        fetch(`https://api.openweathermap.org/data/2.5/weather?q=${CITY}&appid=${WEATHER_KEY}&units=metric`)
+            .then(res => res.json())
+            .then(data => {
+                const temp = Math.round(data.main.temp);
+                const feelsLike = Math.round(data.main.feels_like);
+                const windKmH = Math.round(data.wind.speed * 3.6);
+                const iconCode = data.weather[0].icon;
+
+                const iconMap = {
+                    "04d": "03d", 
+                    "03n": "02n", 
+                    "04n": "02n",
+                    "09n": "09d", 
+                    "11n": "11d", 
+                    "13n": "13d", 
+                    "50n": "50d"
+                };
+
+                const finalIcon = iconMap[iconCode] || iconCode;
+
+                document.getElementById('temp-text').innerText = `${temp}°C`;
+                document.getElementById('hi-lo-text').innerText = `Feels: ${feelsLike}° | Wind: ${windKmH} km/h`;
+                
+                // FIX: Ensure it points to the 'icons' folder
+                document.getElementById('weather-icon').src = `icons/${finalIcon}.png`;
+            })
+            .catch((error) => {
+                console.error("Weather Error:", error);
+                document.getElementById('temp-text').innerText = "N/A";
+            });
 
         // 3. YOUR ICON MAPPING (Reusing your uploaded files)
         const iconMap = {
