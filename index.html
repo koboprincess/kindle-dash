@@ -41,7 +41,7 @@
         // 1. DATE
         document.getElementById('date').innerText = new Date().toLocaleDateString('en-GB', { weekday: 'long', day: 'numeric', month: 'long' });
 
-// 2. WEATHER (Real Feel, Wind, and FOLDER Path)
+// 2. WEATHER (Hi/Lo Logic) - Updated for Custom Icons
         const WEATHER_KEY = "7b1b3a901f5152f5665f24f1385fb45f";
         const CITY = "Ballyforan"; 
 
@@ -49,60 +49,34 @@
             .then(res => res.json())
             .then(data => {
                 const temp = Math.round(data.main.temp);
-                const feelsLike = Math.round(data.main.feels_like);
-                const windKmH = Math.round(data.wind.speed * 3.6);
+                const hi = Math.round(data.main.temp_max);
+                const lo = Math.round(data.main.temp_min);
                 const iconCode = data.weather[0].icon;
 
+                // Create a mapping to reuse your uploaded icons
                 const iconMap = {
-                    "04d": "03d", 
-                    "03n": "02n", 
-                    "04n": "02n",
-                    "09n": "09d", 
-                    "11n": "11d", 
-                    "13n": "13d", 
-                    "50n": "50d"
+                    "04d": "03d",  // Uses your 03d.png for overcast clouds
+                    "03n": "02n",  // Uses your 02n.png for cloudy night
+                    "04n": "02n",  // Uses your 02n.png for overcast night
+                    "09n": "09d",  // Uses your 09d.png (rain) for night rain
+                    "11n": "11d",  // Uses your 11d.png (storm) for night storm
+                    "13n": "13d",  // Uses your 13d.png (snow) for night snow
+                    "50n": "50d"   // Uses your 50d.png (wind/mist) for night mist
                 };
 
+                // Use the mapped name if it exists, otherwise use the original iconCode
                 const finalIcon = iconMap[iconCode] || iconCode;
 
                 document.getElementById('temp-text').innerText = `${temp}°C`;
-                document.getElementById('hi-lo-text').innerText = `Feels: ${feelsLike}° | Wind: ${windKmH} km/h`;
+                document.getElementById('hi-lo-text').innerText = `H: ${hi}° L: ${lo}°`;
                 
-                // FIX: Ensure it points to the 'icons' folder
-                document.getElementById('weather-icon').src = `icons/${finalIcon}.png`;
+                // Point directly to your local files (e.g., 01d.png)
+                document.getElementById('weather-icon').src = `${finalIcon}.png`;
             })
-            .catch((error) => {
-                console.error("Weather Error:", error);
+            .catch(() => {
                 document.getElementById('temp-text').innerText = "N/A";
+                document.getElementById('hi-lo-text').innerText = "";
             });
-
-        // 3. YOUR ICON MAPPING (Reusing your uploaded files)
-        const iconMap = {
-            "04d": "03d",  // Use your cloudy icon for overcast
-            "03n": "02n",  // Use your night-cloud icon for all cloudy nights
-            "04n": "02n",
-            "09n": "09d",  // Use day rain for night rain
-            "11n": "11d",  // Use day storm for night storm
-            "13n": "13d",  // Use day snow for night snow
-            "50n": "50d"   // Use day mist/wind for night mist
-        };
-
-        const finalIcon = iconMap[iconCode] || iconCode;
-
-        // Update the Screen
-        document.getElementById('temp-text').innerText = `${temp}°C`;
-        
-        // Display Real Feel and Wind Speed instead of Hi/Lo
-        document.getElementById('hi-lo-text').innerText = `Feels: ${feelsLike}° | Wind: ${windKmH} km/h`;
-        
-        // Link to your local icon files
-        document.getElementById('weather-icon').src = `${finalIcon}.png`;
-    })
-    .catch((error) => {
-        console.error("Weather Error:", error);
-        document.getElementById('temp-text').innerText = "N/A";
-        document.getElementById('hi-lo-text').innerText = "Check Connection";
-    });
 
 // 3. GOOGLE SHEETS LISTS
 const SHEET_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vS-LRwu3aSW2J2pq4AnpUAjySLn6EkEVmGK_tOw16uyotwu49164_bT2-xANsMr8w9aLHAdfM8erHUJ/pub?gid=0&single=true&output=csv';
