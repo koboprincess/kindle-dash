@@ -122,10 +122,20 @@ async function updateDashboardTasks() {
             if (cols[1] && cols[1].trim()) {
                 cookingHtml += `<div class="task-item">○ ${cols[1].trim()}</div>`;
             }
+            if (cols[2] && cols[2].trim()) {
+                remindersHtml += `<div class="task-item">● ${cols[2].trim()}</div>`;
+            }
         });
 
         document.getElementById('todo-list-dinner').innerHTML = todayHtml || "○ No tasks";
         document.getElementById('todo-list-tasks').innerHTML = cookingHtml || "○ No tasks";
+        const remBox = document.getElementById('reminders-box');
+        if (remindersHtml) {
+            document.getElementById('reminders-list').innerHTML = remindersHtml;
+            remBox.style.display = "block"; // Only shows if Column C has content
+        } else {
+            remBox.style.display = "none";
+        }
     } catch (e) {
         document.getElementById('todo-list-dinner').innerHTML = "Sheet Error";
     }
