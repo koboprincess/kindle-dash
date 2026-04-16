@@ -115,11 +115,43 @@ body {
 }
 
 /* 3. CONTENT COLUMNS */
+/* Update the Left Column to keep things contained */
 .left-col { 
     grid-column: 1;
-    padding-right: 40px; /* Space before the center line */
-    padding-left: 0px;
+    padding-right: 40px; 
     text-align: left;
+    display: flex;
+    flex-direction: column;
+    height: 750px; /* Matches your grid-template-rows height */
+}
+
+/* Let the Cooking list take the top space, but scroll if too long */
+#todo-list-tasks {
+    flex-grow: 1;
+    overflow: hidden; /* Prevents it from pushing everything down */
+    max-height: 450px; /* Adjust this so there is room for reminders */
+}
+
+/* The Reminders Box Styling */
+#reminders-box {
+    background-color: #333; /* Dark grey */
+    color: white;
+    padding: 20px;
+    margin-top: auto; /* This is the "magic" that pushes it to the bottom */
+    margin-bottom: 10px;
+    border-radius: 15px;
+}
+
+.reminders-title {
+    font-size: 30px;
+    font-weight: bold;
+    text-transform: uppercase;
+    border-bottom: 2px solid white;
+    margin-bottom: 10px;
+}
+
+#reminders-list {
+    font-size: 32px;
 }
 
 .right-col { 
