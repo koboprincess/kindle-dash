@@ -23,11 +23,16 @@
     </div>
 
     <div class="left-col">
-        <div class="todo-section">
-            <div class="todo-title">Cooking</div>
-            <div id="todo-list-dinner">Loading menu...</div>
-        </div>
+    <div class="todo-section">
+        <div class="todo-title">Cooking</div>
+        <div id="todo-list-tasks">Loading tasks...</div>
     </div>
+
+    <div id="reminders-box" style="display: none;">
+        <div class="reminders-title">Reminders</div>
+        <div id="reminders-list"></div>
+    </div>
+</div>
 
     <div class="right-col">
         <div class="todo-section">
@@ -109,25 +114,43 @@ async function updateDashboardTasks() {
     try {
         const response = await fetch(SHEET_URL);
         const data = await response.text();
-        const rows = data.split('\n').slice(1); // Skip the header row
+        const rows = data.split('\n').slice(1); 
 
-        let todayHtml = "";
-        let cookingHtml = "";
+        let cookingHtml = "";   
+        let todayHtml = "";     
+        let remindersHtml = ""; 
 
         rows.forEach(row => {
             const cols = row.split(',');
+            // Column A -> To Do (Right)
             if (cols[0] && cols[0].trim()) {
                 todayHtml += `<div class="task-item">○ ${cols[0].trim()}</div>`;
             }
+            // Column B -> Cooking (Left)
             if (cols[1] && cols[1].trim()) {
                 cookingHtml += `<div class="task-item">○ ${cols[1].trim()}</div>`;
             }
+            // Column C -> Reminders (Bottom Left)
+            // Using split(',') can be tricky if your reminders have commas. 
+            // If you have issues, let me know!
+            if (cols[2] && cols[2].trim()) {
+                remindersHtml += `<div class="task-item">● ${cols[2].trim()}</div>`;
+            }
         });
 
-        document.getElementById('todo-list-dinner').innerHTML = todayHtml || "○ No tasks";
         document.getElementById('todo-list-tasks').innerHTML = cookingHtml || "○ No tasks";
+        document.getElementById('todo-list-dinner').innerHTML = todayHtml || "○ No tasks";
+        
+        const remBox = document.getElementById('reminders-box');
+        if (remindersHtml) {
+            document.getElementById('reminders-list').innerHTML = remindersHtml;
+            remBox.style.display = "block";
+        } else {
+            remBox.style.display = "none";
+        }
+
     } catch (e) {
-        document.getElementById('todo-list-dinner').innerHTML = "Sheet Error";
+        document.getElementById('todo-list-tasks').innerHTML = "Sheet Error";
     }
 }
 updateDashboardTasks();
