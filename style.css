@@ -1,6 +1,6 @@
 /* 1. MAIN PAGE LAYOUT */
 :root {
-    --header-line-length: 800px; 
+    --header-line-length: 650px; 
 }
 
 body {
@@ -18,7 +18,7 @@ body {
     /* 50/50 Split */
     grid-template-columns: 1fr 1fr; 
     /* Row 1: Header (Auto size) | Row 2: Content | Row 3: Quote */
-    grid-template-rows: auto auto 1fr;
+    grid-template-rows: auto 650px 1fr;
     gap: 0; 
     overflow: hidden;
 }
