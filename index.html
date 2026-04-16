@@ -68,7 +68,7 @@
                 const finalIcon = iconMap[iconCode] || iconCode;
 
                 document.getElementById('temp-text').innerText = `${temp}°C`;
-                document.getElementById('hi-lo-text').innerText = `<b>Feels:</b> ${feelsLike}°<br><b>Wind:</b> ${windKmH} km/h`;
+                document.getElementById('hi-lo-text').innerHTML = `<b>Feels:</b> ${feelsLike}°<br><b>Wind:</b> ${windKmH} km/h`;
                 
                 // Point directly to your local files (e.g., 01d.png)
                 document.getElementById('weather-icon').src = `icons/${finalIcon}.png`;
