@@ -41,7 +41,7 @@
         // 1. DATE
         document.getElementById('date').innerText = new Date().toLocaleDateString('en-GB', { weekday: 'long', day: 'numeric', month: 'long' });
 
-        // 2. WEATHER (Hi/Lo Logic)
+        // 2. WEATHER (Hi/Lo Logic) - Updated for Custom Icons
         const WEATHER_KEY = "7b1b3a901f5152f5665f24f1385fb45f";
         const CITY = "Ballyforan"; 
 
@@ -53,9 +53,25 @@
                 const lo = Math.round(data.main.temp_min);
                 const iconCode = data.weather[0].icon;
 
+                // Create a mapping to reuse your uploaded icons
+                const iconMap = {
+                    "04d": "03d",  // Uses your 03d.png for overcast clouds
+                    "03n": "02n",  // Uses your 02n.png for cloudy night
+                    "04n": "02n",  // Uses your 02n.png for overcast night
+                    "09n": "09d",  // Uses your 09d.png (rain) for night rain
+                    "11n": "11d",  // Uses your 11d.png (storm) for night storm
+                    "13n": "13d",  // Uses your 13d.png (snow) for night snow
+                    "50n": "50d"   // Uses your 50d.png (wind/mist) for night mist
+                };
+
+                // Use the mapped name if it exists, otherwise use the original iconCode
+                const finalIcon = iconMap[iconCode] || iconCode;
+
                 document.getElementById('temp-text').innerText = `${temp}°C`;
                 document.getElementById('hi-lo-text').innerText = `H: ${hi}° L: ${lo}°`;
-                document.getElementById('weather-icon').src = `https://openweathermap.org/img/wn/${iconCode}@2x.png`;
+                
+                // Point directly to your local files (e.g., 01d.png)
+                document.getElementById('weather-icon').src = `${finalIcon}.png`;
             })
             .catch(() => {
                 document.getElementById('temp-text').innerText = "N/A";
