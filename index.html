@@ -71,7 +71,7 @@
                 document.getElementById('hi-lo-text').innerText = `H: ${hi}° L: ${lo}°`;
                 
                 // Point directly to your local files (e.g., 01d.png)
-                document.getElementById('weather-icon').src = `${finalIcon}.png`;
+                document.getElementById('weather-icon').src = `icons/${finalIcon}.png`;
             })
             .catch(() => {
                 document.getElementById('temp-text').innerText = "N/A";
