@@ -1,193 +1,186 @@
-/* 1. MAIN PAGE LAYOUT */
+here's the css: /* 1. MAIN PAGE LAYOUT */
 :root {
-    --header-line-length: 650px; 
+    --header-line-length: 650px; 
 }
 
 body {
-    position: relative;
-    width: 1680px; 
-    height: 1264px; 
-    margin: 0; 
-    padding: 40px; 
-    font-family: "Helvetica", Arial, sans-serif; 
-    background: white; 
-    color: black;
-    box-sizing: border-box;
-    display: grid;
-    
-    /* The Body Grid handles the 3 big vertical rows */
-    grid-template-columns: 1fr 1fr 1fr; 
-    grid-template-rows: auto auto 1fr;
-    gap: 0; 
-    overflow: hidden;
+    position: relative;
+    width: 1680px; 
+    height: 1264px; 
+    margin: 0; 
+    padding: 40px; 
+    font-family: "Helvetica", Arial, sans-serif; 
+    background: white; 
+    color: black;
+    box-sizing: border-box;
+    display: grid;
+    
+    /* 50/50 Split */
+    grid-template-columns: 1fr 1fr 1fr; 
+    grid-template-rows: auto 650px auto;
+    gap: 0; 
+    overflow: hidden;
 }
 
 /* 2. THE HEADER (DATE BOX + WEATHER BOX) */
 #header-container {
-    grid-column: 1 / 4; /* Spans across all 3 columns */
-    width: 100%;
-    display: flex;                
-    justify-content: space-between; 
-    align-items: flex-start;      
-    margin-bottom: 50px;          
+    grid-column: 1 / 4;
+    width: 100%;
+    display: flex;                /* Aligns boxes side-by-side */
+    justify-content: space-between; /* Pushes one left, one right */
+    align-items: flex-start;      /* Keeps both at the very top */
+    margin-bottom: 50px;          /* Space before the lists start */
 }
 
 /* DATE AND MOON BOX STYLING */
 #info-box-left {
-    background-color: #f0f0f0;
-    padding: 20px 35px;           
-    border-radius: 15px;
-    display: flex;
-    flex-direction: column;       
-    align-items: flex-start;
-    width: auto;                  
-    min-width: 500px;             
+    background-color: #f0f0f0;
+    padding: 20px 35px;           /* More side padding for the wide date */
+    border-radius: 15px;
+    display: flex;
+    flex-direction: column;       /* Date on top, Moon on bottom */
+    align-items: flex-start;
+    width: auto;                  /* Allow it to grow */
+    min-width: 500px;             /* Ensures plenty of room for "The 16 April" */
 }
 
 #date {
-    font-size: 55px;              
-    font-weight: bold;
-    text-transform: uppercase;
-    line-height: 1.1;
-    margin-bottom: 5px;
-    white-space: nowrap;          
-    display: block;
+    font-size: 55px;              /* Slightly smaller to ensure it fits Kindle width */
+    font-weight: bold;
+    text-transform: uppercase;
+    line-height: 1.1;
+    margin-bottom: 5px;
+    white-space: nowrap;          /* FIX: Forces date to stay on one line */
+    display: block;
 }
 
 #moon-phase {
-    display: flex;
-    align-items: center;
-    justify-content: flex-start;
-    gap: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 15px;
 }
 
 .moon-icon {
-    font-size: 70px !important; 
-    line-height: 1;
+    font-size: 70px !important; 
+    line-height: 1;
 }
 
 .moon-details {
-    display: flex;
-    flex-direction: column;
-    text-align: left;
+    display: flex;
+    flex-direction: column;
+    text-align: left;
 }
 
 .moon-name {
-    font-size: 24px;
-    font-weight: bold;
-    text-transform: uppercase;
+    font-size: 24px;
+    font-weight: bold;
+    text-transform: uppercase;
 }
 
 .moon-percent {
-    font-size: 20px;
-    opacity: 0.8;
+    font-size: 20px;
+    opacity: 0.8;
 }
 
 /* WEATHER BOX STYLING */
 #weather-box {
-    background-color: #e0e0e0 !important; 
-    padding: 20px 30px; 
-    border-radius: 20px;
-    display: flex;
-    align-items: center;
-    gap: 25px;
+    /* No longer absolute - Flexbox handles the positioning */
+    background-color: #e0e0e0 !important; 
+    padding: 20px 30px; 
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    gap: 25px;
 }
 
-#weather-icon { 
-    width: 150px; 
-    height: 150px; 
-    filter: grayscale(100%) contrast(2.5); 
+#weather-icon { 
+    width: 150px; 
+    height: 150px; 
+    filter: grayscale(100%) contrast(2.5); 
 }
 
 .temp-container {
-    display: flex;
-    flex-direction: column;
+    display: flex;
+    flex-direction: column;
 }
 
-#temp-text { 
-    font-size: 90px; 
-    font-weight: bold; 
-    line-height: 0.9;
+#temp-text { 
+    font-size: 90px; 
+    font-weight: bold; 
+    line-height: 0.9;
 }
 
 #hi-lo-text {
-    font-size: 28px;
-    line-height: 1.2;
-    margin-top: 5px;
+    font-size: 28px;
+    line-height: 1.2;
+    margin-top: 5px;
 }
 
 #hi-lo-text b {
-    font-weight: bold;
+    font-weight: bold;
 }
 
-/* 3. CONTENT COLUMNS (THE FIX FOR SQUISHING) */
-
-.main-container {
-    grid-column: 1 / 4;   /* Forces the wrapper to be full width */
-    display: grid;        /* Turn the wrapper into a grid too! */
-    grid-template-columns: 1fr 1fr 1fr; /* Splitting it 3 ways */
-    width: 100%;
-    gap: 0;
-}
+/* 3. CONTENT COLUMNS (3-COLUMN LAYOUT) */
 
 /* Column 1: Cooking */
-.left-col { 
-    grid-column: 1;
-    padding-right: 40px; 
-    text-align: left;
+.left-col { 
+    grid-column: 1;
+    padding: 0 40px 0 0; /* Padding on the right only */
+    text-align: left;
 }
 
 /* Column 2: To Do */
-.middle-col { 
-    grid-column: 2;
-    border-left: 5px solid black; 
-    padding: 0 40px; 
-    min-height: var(--header-line-length);
+.middle-col { 
+    grid-column: 2;
+    border-left: 5px solid black; /* Vertical Divider 1 */
+    padding: 0 40px; 
+    min-height: var(--header-line-length);
 }
 
 /* Column 3: Reminders */
-.right-col-2 { 
-    grid-column: 3;
-    border-left: 5px solid black; 
-    padding-left: 40px; 
-    min-height: var(--header-line-length);
+.right-col-2 { 
+    grid-column: 3;
+    border-left: 5px solid black; /* Vertical Divider 2 */
+    padding: 0 0 0 40px; /* Padding on the left only */
+    min-height: var(--header-line-length);
 }
 
 /* Shared Task Styling */
-.todo-title { 
-    font-size: 38px; 
-    font-weight: bold; 
-    margin-bottom: 20px; 
-    text-transform: uppercase; 
-    border-bottom: 5px solid black;
-    width: 100%; 
-    display: block; 
+.todo-title { 
+    font-size: 38px; /* Slightly smaller to fit 3 columns */
+    font-weight: bold; 
+    margin-bottom: 20px; 
+    text-transform: uppercase; 
+    border-bottom: 5px solid black;
+    width: 100%; 
+    display: block; 
 }
 
 .task-item {
-    font-size: 34px; 
-    margin-bottom: 12px;
-    line-height: 1.2;
+    font-size: 34px; /* Reduced to prevent text hitting the divider lines */
+    margin-bottom: 12px;
+    line-height: 1.2;
 }
 
 /* 4. THE QUOTE BOX */
-#quote-box { 
-    grid-column: 1 / 4 !important; 
-    align-self: end; 
-    text-align: center;
-    font-size: 38px; 
-    line-height: 1.4; 
-    font-style: italic; 
-    background: #e0e0e0 !important;
-    padding: 25px 40px; 
-    border-radius: 20px;
-    margin-top: 20px;
+#quote-box { 
+    grid-column: 1 / 4 !important; /* Spans all 3 columns */
+    align-self: end; 
+    text-align: center;
+    font-size: 38px; /* Slightly smaller to ensure it stays on screen */
+    line-height: 1.4; 
+    font-style: italic; 
+    background: #e0e0e0 !important;
+    padding: 25px 40px; 
+    border-radius: 20px;
+    margin-top: 20px;
 }
 
 .quote-author {
-    display: block;
-    font-size: 32px;
-    font-style: normal;
-    font-weight: bold;
-    margin-top: 10px;
+    display: block;
+    font-size: 32px;
+    font-style: normal;
+    font-weight: bold;
+    margin-top: 10px;
 }
