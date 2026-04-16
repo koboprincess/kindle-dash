@@ -73,8 +73,11 @@
 // Display the moon phase with percentage
 const moon = getMoonPhase();
 document.getElementById('moon-phase').innerHTML = `
-    <span>${moon.icon}</span> 
-    ${moon.name} <span class="moon-percent">${moon.percent}%</span>
+    <span class="moon-icon">${moon.icon}</span> 
+    <div class="moon-details">
+        <div class="moon-name">${moon.name}</div>
+        <div class="moon-percent">${moon.percent}%</div>
+    </div>
 `;
 
 // 2. WEATHER (feels like & wind speed) - Updated for Custom Icons
