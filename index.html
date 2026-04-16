@@ -31,10 +31,17 @@
             </div>
         </div>
 
-        <div class="right-col">
+        <div class="middle-col">
             <div class="todo-section">
                 <div class="todo-title">To Do</div>
                 <div id="todo-list-tasks">Loading tasks...</div>
+            </div>
+        </div>
+        
+        <div class="right-col-3">
+            <div class="sticky-note">
+                <div class="todo-title" style="color: white; border-bottom-color: white;">Reminders</div>
+                <div id="reminders-list">Loading...</div> 
             </div>
         </div>
 
@@ -122,21 +129,30 @@ async function updateDashboardTasks() {
 
         let cookingHtml = "";
         let todayHtml = "";
+        let remindersHtml = ""; // 1. Create the variable
 
         rows.forEach(row => {
             const cols = row.split(',');
-            // Column A -> Cooking
             if (cols[0] && cols[0].trim()) {
                 cookingHtml += `<div class="task-item">○ ${cols[0].trim()}</div>`;
             }
-            // Column B -> To Do
             if (cols[1] && cols[1].trim()) {
                 todayHtml += `<div class="task-item">○ ${cols[1].trim()}</div>`;
+            }
+            // 2. Pull Column C from your sheet for Reminders
+            if (cols[2] && cols[2].trim()) {
+                remindersHtml += `<div class="task-item">○ ${cols[2].trim()}</div>`;
             }
         });
 
         document.getElementById('todo-list-dinner').innerHTML = cookingHtml || "○ No tasks";
         document.getElementById('todo-list-tasks').innerHTML = todayHtml || "○ No tasks";
+        
+        // 3. Update the new Reminders list
+        const reminderBox = document.getElementById('reminders-list');
+        if (reminderBox) {
+            reminderBox.innerHTML = remindersHtml || "○ None today";
+        }
     } catch (e) {
         console.error("Sheet Error", e);
     }
