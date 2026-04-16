@@ -50,6 +50,18 @@ body {
     font-weight: bold;
     text-transform: uppercase;
 }
+#moon-phase {
+    font-size: 24px;
+    color: black;
+    margin-top: 10px;
+    display: flex;
+    align-items: center;
+}
+
+#moon-phase span {
+    font-size: 32px; /* Makes the moon symbol slightly larger */
+    margin-right: 10px;
+}
 
 /* 3. WEATHER POSITIONING */
 #weather-box {
