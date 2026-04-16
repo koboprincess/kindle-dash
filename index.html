@@ -8,11 +8,6 @@
 <body>
 
     <div id="header-container">
-        <div id="date-box">
-            <div class="date" id="date"></div>
-            <div id="moon-phase"></div> </div>
-        </div>
-
         <div id="weather-box">
             <img id="weather-icon" src="" alt="">
             <div class="temp-container">
@@ -22,31 +17,37 @@
         </div>
     </div>
 
-    <div class="left-col">
-        <div id="info-box-left" class="grey-box">
-            <div id="date">Loading date...</div>
-            <div id="moon-phase">
-                </div>
-        </div>
-        <div class="todo-section">
-            <div class="todo-title">Cooking</div>
-            <div id="todo-list-dinner">Loading menu...</div>
-        </div>
-    </div>
+    <div class="main-container" style="display: flex;">
+        
+        <div class="left-col">
+            <div id="info-box-left" class="grey-box">
+                <div id="date">Loading date...</div>
+                <div id="moon-phase"></div> 
+            </div>
 
-    <div class="right-col">
-        <div class="todo-section">
-            <div class="todo-title">To Do</div>
-            <div id="todo-list-tasks">Loading tasks...</div>
+            <div class="todo-section">
+                <div class="todo-title">Cooking</div>
+                <div id="todo-list-dinner">Loading menu...</div>
+            </div>
         </div>
-    </div>
 
-    <div id="quote-box"></div>
+        <div class="right-col">
+            <div class="todo-section">
+                <div class="todo-title">To Do</div>
+                <div id="todo-list-tasks">Loading tasks...</div>
+            </div>
+        </div>
+
+    </div> <div id="quote-box"></div>
 
     <script>
+    
     // 1. DATE
-    document.getElementById('date').innerText = new Date().toLocaleDateString('en-GB', { weekday: 'long', day: 'numeric', month: 'long' });
-
+    document.getElementById('date').innerText = new Date().toLocaleDateString('en-GB', { 
+        weekday: 'short', 
+        day: 'numeric', 
+        month: 'long' 
+    });
     // --- ADD THE MOON CODE DIRECTLY BELOW THE DATE ---
     function getMoonPhase() {
     const now = new Date();
