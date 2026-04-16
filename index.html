@@ -141,17 +141,17 @@ async function updateDashboardTasks() {
             }
             // 2. Pull Column C from your sheet for Reminders
             if (cols[2] && cols[2].trim()) {
-                remindersHtml += `<div class="task-item">○ ${cols[2].trim()}</div>`;
+                remindersHtml += `<div class="task-item">● ${cols[2].trim()}</div>`;
             }
         });
 
-        document.getElementById('todo-list-dinner').innerHTML = cookingHtml || "○ No tasks";
+        document.getElementById('todo-list-dinner').innerHTML = cookingHtml || "○ Nothing planned";
         document.getElementById('todo-list-tasks').innerHTML = todayHtml || "○ No tasks";
         
         // 3. Update the new Reminders list
         const reminderBox = document.getElementById('reminders-list');
         if (reminderBox) {
-            reminderBox.innerHTML = remindersHtml || "○ None today";
+            reminderBox.innerHTML = remindersHtml || "● None today";
         }
     } catch (e) {
         console.error("Sheet Error", e);
