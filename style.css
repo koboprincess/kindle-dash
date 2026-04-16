@@ -42,7 +42,7 @@ body {
     position: absolute;
     
     /* --- MANUALLY MOVE DATE HERE --- */
-    top: 10px;   /* Distance from top edge */
+    top: 0px;   /* Distance from top edge */
     left: 0px;  /* Distance from left edge */
     
     /* Font Styling */
