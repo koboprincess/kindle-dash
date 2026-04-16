@@ -115,11 +115,30 @@ body {
 }
 
 /* 3. CONTENT COLUMNS */
-.left-col { 
-    grid-column: 1;
-    padding-right: 40px; /* Space before the center line */
-    padding-left: 0px;
-    text-align: left;
+.left-col {
+    display: flex;
+    flex-direction: column;
+    height: 750px; /* Ensures it stays within its grid row */
+}
+
+.todo-section {
+    flex-grow: 1; /* Pushes the reminders box to the bottom */
+}
+
+#reminders-box {
+    background-color: #333; /* Dark Grey */
+    color: white;
+    padding: 20px;
+    border-radius: 15px;
+    margin-top: 20px;
+}
+
+.reminders-title {
+    font-size: 30px;
+    font-weight: bold;
+    text-transform: uppercase;
+    border-bottom: 2px solid white;
+    margin-bottom: 10px;
 }
 
 .right-col { 
