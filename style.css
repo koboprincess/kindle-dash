@@ -1,6 +1,6 @@
 /* 1. MAIN PAGE LAYOUT */
 :root {
-    --header-line-length: 650px; 
+    --header-line-length: 700px; 
 }
 
 body {
@@ -92,7 +92,7 @@ body {
 /* Column 2: To Do (with divider on the left) */
 .middle-col { 
     grid-column: 2;
-    border-left: 5px solid black; 
+    border-left: 5px solid #bbbbbb; 
     padding-left: 30px;
     min-height: var(--header-line-length);
 }
@@ -117,7 +117,7 @@ body {
     font-weight: bold; 
     margin-bottom: 20px; 
     text-transform: uppercase; 
-    border-bottom: 5px solid black;
+    border-bottom: 5px solid #bbbbbb;
     width: 100%; 
     display: block; 
 }
