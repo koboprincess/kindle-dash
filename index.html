@@ -44,26 +44,38 @@
 
     // --- ADD THE MOON CODE DIRECTLY BELOW THE DATE ---
     function getMoonPhase() {
-        const now = new Date();
-        const lp = 2551443; 
-        const new_moon = new Date(1970, 0, 7, 20, 35, 0);
-        const phase = ((now.getTime() - new_moon.getTime()) / 1000) % lp;
-        const age = Math.floor(phase / (24 * 3600)) + 1;
+    const now = new Date();
+    const lp = 2551443; // Lunar period in seconds
+    const new_moon = new Date(1970, 0, 7, 20, 35, 0);
+    const phase = ((now.getTime() - new_moon.getTime()) / 1000) % lp;
+    const age = Math.floor(phase / (24 * 3600)) + 1;
 
-        if (age <= 1) return { name: "New Moon", icon: "🌑" };
-        if (age <= 6) return { name: "Waxing Crescent", icon: "🌒" };
-        if (age <= 9) return { name: "First Quarter", icon: "🌓" };
-        if (age <= 14) return { name: "Waxing Gibbous", icon: "🌔" };
-        if (age <= 16) return { name: "Full Moon", icon: "🌕" };
-        if (age <= 21) return { name: "Waning Gibbous", icon: "🌖" };
-        if (age <= 24) return { name: "Last Quarter", icon: "🌗" };
-        if (age <= 28) return { name: "Waning Crescent", icon: "🌘" };
-        return { name: "New Moon", icon: "🌑" };
-    }
+    // Calculate illumination percentage (0 to 100)
+    // 0 or 29.5 is New Moon (0%), 14.75 is Full Moon (100%)
+    const percent = Math.abs((phase / lp) * 2 - 1);
+    const illumination = Math.round((1 - percent) * 100);
 
-    const moon = getMoonPhase();
-    document.getElementById('moon-phase').innerHTML = `<span>${moon.icon}</span> ${moon.name}`;
-    // -------------------------------------------------
+    let moonData = { name: "", icon: "", percent: illumination };
+
+    if (age <= 1) moonData = { ...moonData, name: "New Moon", icon: "🌑" };
+    else if (age <= 6) moonData = { ...moonData, name: "Waxing Crescent", icon: "🌒" };
+    else if (age <= 9) moonData = { ...moonData, name: "First Quarter", icon: "🌓" };
+    else if (age <= 14) moonData = { ...moonData, name: "Waxing Gibbous", icon: "🌔" };
+    else if (age <= 16) moonData = { ...moonData, name: "Full Moon", icon: "🌕" };
+    else if (age <= 21) moonData = { ...moonData, name: "Waning Gibbous", icon: "🌖" };
+    else if (age <= 24) moonData = { ...moonData, name: "Last Quarter", icon: "🌗" };
+    else if (age <= 28) moonData = { ...moonData, name: "Waning Crescent", icon: "🌘" };
+    else moonData = { ...moonData, name: "New Moon", icon: "🌑" };
+
+    return moonData;
+}
+
+// Display the moon phase with percentage
+const moon = getMoonPhase();
+document.getElementById('moon-phase').innerHTML = `
+    <span>${moon.icon}</span> 
+    ${moon.name} <span class="moon-percent">${moon.percent}%</span>
+`;
 
 // 2. WEATHER (feels like & wind speed) - Updated for Custom Icons
         const WEATHER_KEY = "7b1b3a901f5152f5665f24f1385fb45f";
