@@ -37,18 +37,26 @@ body {
     position: relative; /* Essential for the 'top' and 'left' coordinates below to work */
 }
 
-/* 2. DATE POSITIONING */
-#date-box {
-    position: absolute;
+/* 2. DATE AND MOON BOX STYLING */
+#info-box-left {
+    background-color: #f0f0f0; /* The same grey as your other boxes */
+    padding: 25px;
+    border-radius: 15px;
+    margin-bottom: 30px;      /* Pushes the Cooking list down */
     
-    /* --- MANUALLY MOVE DATE HERE --- */
-    top: 0px;   /* Distance from top edge */
-    left: 0px;  /* Distance from left edge */
-    
-    /* Font Styling */
-    font-size: 70px; 
+    /* This ensures everything inside stays aligned left */
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+#date {
+    /* We removed absolute positioning so it stays inside the box */
+    font-size: 60px; /* Slightly smaller than 70px to fit better in a box */
     font-weight: bold;
     text-transform: uppercase;
+    line-height: 1.1;
+    margin-bottom: 10px; /* Space between Date and Moon */
 }
 
 #moon-phase {
@@ -56,13 +64,28 @@ body {
     align-items: center;
     justify-content: flex-start;
     gap: 15px;
-    margin-top: 15px; /* Increase or decrease this number */
+    /* No need for a huge margin-top here anymore */
 }
 
-/* THE ICON: Big and bold */
 .moon-icon {
-    font-size: 70px !important; /* Adjust this number to go even bigger */
+    font-size: 70px !important; 
     line-height: 1;
+}
+
+/* Ensure the text next to the moon looks clean */
+.moon-details {
+    display: flex;
+    flex-direction: column;
+}
+
+.moon-name {
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.moon-percent {
+    font-size: 18px;
+    opacity: 0.8;
 }
 
 /* THE TEXT CONTAINER: Stacked nicely */
