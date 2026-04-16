@@ -90,8 +90,15 @@ body {
     line-height: 0.9;
 }
 
-#hi-lo-text { 
-    font-size: 30px;
+#hi-lo-text {
+    font-size: 28px;
+    font-weight: normal; /* Changes the whole block to normal text */
+    line-height: 1.2;
+    margin-top: 5px;
+}
+
+/* This ensures the <b> tags inside the text still look bold */
+#hi-lo-text b {
     font-weight: bold;
 }
 
