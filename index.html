@@ -41,7 +41,7 @@
         // 1. DATE
         document.getElementById('date').innerText = new Date().toLocaleDateString('en-GB', { weekday: 'long', day: 'numeric', month: 'long' });
 
-// 2. WEATHER (Hi/Lo Logic) - Updated for Custom Icons
+// 2. WEATHER (feels like & wind speed) - Updated for Custom Icons
         const WEATHER_KEY = "7b1b3a901f5152f5665f24f1385fb45f";
         const CITY = "Ballyforan"; 
 
@@ -49,8 +49,8 @@
             .then(res => res.json())
             .then(data => {
                 const temp = Math.round(data.main.temp);
-                const hi = Math.round(data.main.temp_max);
-                const lo = Math.round(data.main.temp_min);
+                const feelsLike = Math.round(data.main.feels_like); // Gets Real Feel
+                const windKmH = Math.round(data.wind.speed * 3.6); // Converts m/s to km/h
                 const iconCode = data.weather[0].icon;
 
                 // Create a mapping to reuse your uploaded icons
@@ -68,7 +68,7 @@
                 const finalIcon = iconMap[iconCode] || iconCode;
 
                 document.getElementById('temp-text').innerText = `${temp}°C`;
-                document.getElementById('hi-lo-text').innerText = `H: ${hi}° L: ${lo}°`;
+                document.getElementById('hi-lo-text').innerText = `Feels: ${feelsLike}° | Wind: ${windKmH} km/h`;
                 
                 // Point directly to your local files (e.g., 01d.png)
                 document.getElementById('weather-icon').src = `icons/${finalIcon}.png`;
