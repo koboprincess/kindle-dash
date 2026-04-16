@@ -63,6 +63,13 @@ body {
     margin-right: 10px;
 }
 
+.moon-percent {
+    font-size: 18px; /* Slightly smaller than the phase name */
+    font-weight: normal;
+    margin-left: 8px;
+    opacity: 0.8; /* Makes it look slightly grey on E-ink */
+}
+
 /* 3. WEATHER POSITIONING */
 #weather-box {
     position: absolute;
