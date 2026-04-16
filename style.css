@@ -59,8 +59,11 @@ body {
 }
 
 #moon-phase span {
-    font-size: 32px; /* Makes the moon symbol slightly larger */
-    margin-right: 10px;
+    font-size: 50px; /* Makes the moon symbol slightly larger */
+    margin-right: 12px;
+    display: inline-block; 
+    line-height: 1;         /* Keeps the large icon from adding extra height to the box */
+    vertical-align: middle; /* Keeps it centered with the text next to it */
 }
 
 .moon-percent {
