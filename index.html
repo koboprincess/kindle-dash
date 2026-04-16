@@ -146,6 +146,14 @@ updateDashboardTasks();
             { text: "You miss 100% of the shots you don’t take.", author: "Wayne Gretzky" }
         ];
 
-        const randomQuote = myQuotes[Math.floor(Math.random() * myQuotes.length)];
-        document.getElementById('quote-box').innerHTML = `"${randomQuote.text}" <span class="quote-author">— ${randomQuote.author}</span>`;
+        // Get a unique number for today (YYYYMMDD)
+        const now = new Date();
+        const dateSeed = now.getFullYear() * 10000 + (now.getMonth() + 1) * 100 + now.getDate();
+
+        // Use the seed to pick the same quote all day
+        // The modulo operator (%) ensures the number stays within the range of your list
+        const dailyIndex = dateSeed % myQuotes.length;
+        const dailyQuote = myQuotes[dailyIndex];
+
+        document.getElementById('quote-box').innerHTML = `"${dailyQuote.text}" <span class="quote-author">— ${dailyQuote.author}</span>`
     </script>
