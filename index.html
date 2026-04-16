@@ -9,7 +9,8 @@
 
     <div id="header-container">
         <div id="date-box">
-            <div class="date" id="date"></div>  
+            <div class="date" id="date"></div>
+            <div id="moon-phase"></div> </div>
         </div>
 
         <div id="weather-box">
@@ -38,8 +39,31 @@
     <div id="quote-box"></div>
 
     <script>
-        // 1. DATE
-        document.getElementById('date').innerText = new Date().toLocaleDateString('en-GB', { weekday: 'long', day: 'numeric', month: 'long' });
+    // 1. DATE
+    document.getElementById('date').innerText = new Date().toLocaleDateString('en-GB', { weekday: 'long', day: 'numeric', month: 'long' });
+
+    // --- ADD THE MOON CODE DIRECTLY BELOW THE DATE ---
+    function getMoonPhase() {
+        const now = new Date();
+        const lp = 2551443; 
+        const new_moon = new Date(1970, 0, 7, 20, 35, 0);
+        const phase = ((now.getTime() - new_moon.getTime()) / 1000) % lp;
+        const age = Math.floor(phase / (24 * 3600)) + 1;
+
+        if (age <= 1) return { name: "New Moon", icon: "🌑" };
+        if (age <= 6) return { name: "Waxing Crescent", icon: "🌒" };
+        if (age <= 9) return { name: "First Quarter", icon: "🌓" };
+        if (age <= 14) return { name: "Waxing Gibbous", icon: "🌔" };
+        if (age <= 16) return { name: "Full Moon", icon: "🌕" };
+        if (age <= 21) return { name: "Waning Gibbous", icon: "🌖" };
+        if (age <= 24) return { name: "Last Quarter", icon: "🌗" };
+        if (age <= 28) return { name: "Waning Crescent", icon: "🌘" };
+        return { name: "New Moon", icon: "🌑" };
+    }
+
+    const moon = getMoonPhase();
+    document.getElementById('moon-phase').innerHTML = `<span>${moon.icon}</span> ${moon.name}`;
+    // -------------------------------------------------
 
 // 2. WEATHER (feels like & wind speed) - Updated for Custom Icons
         const WEATHER_KEY = "7b1b3a901f5152f5665f24f1385fb45f";
