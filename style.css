@@ -96,6 +96,10 @@ body {
     line-height: 1.2;
     margin-top: 5px;
 }
+/* This ensures only the text inside the <b> tags stays bold */
+#hi-lo-text b {
+    font-weight: bold;
+}
 
 /* 3. CONTENT COLUMNS */
 :root {
