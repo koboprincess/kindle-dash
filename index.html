@@ -22,30 +22,31 @@
         </div>
     </div>
 
-    <div class="main-container" style="display: flex;">
-        
-        <div class="left-col">
-            <div class="todo-section">
-                <div class="todo-title">Cooking</div>
-                <div id="todo-list-dinner">Loading menu...</div>
-            </div>
-        </div>
-
-        <div class="middle-col">
-            <div class="todo-section">
-                <div class="todo-title">To Do</div>
-                <div id="todo-list-tasks">Loading tasks...</div>
-            </div>
-        </div>
-        
-        <div class="right-col-2">
+    <div class="left-col">
         <div class="todo-section">
-            <div class="todo-title">Reminders</div>
-            <div id="reminders-list">○ Pick up milk<br>○ Call Mom</div> 
+            <div class="todo-title">Cooking</div>
+            <div id="todo-list-dinner">Loading menu...</div>
         </div>
     </div>
 
-    </div> <div id="quote-box"></div>
+    <div class="middle-col">
+        <div class="todo-section">
+            <div class="todo-title">To Do</div>
+            <div id="todo-list-tasks">Loading tasks...</div>
+        </div>
+    </div>
+    
+    <div class="right-col-2">
+        <div class="todo-section">
+            <div class="todo-title">Reminders</div>
+            <div id="reminders-list">
+                <div class="task-item">○ Pick up milk</div>
+                <div class="task-item">○ Call Mom</div>
+            </div> 
+        </div>
+    </div>
+
+    <div id="quote-box"></div>
 
     <script>
     
@@ -149,15 +150,14 @@ async function updateDashboardTasks() {
             if (cols[0] && cols[0].trim()) {
                 todayHtml += `<div class="task-item">○ ${cols[0].trim()}</div>`;
             }
-            if (cols[1] && cols[1].trim()) {
-                cookingHtml += `<div class="task-item">○ ${cols[1].trim()}</div>`;
+            if (cols[2] && cols[2].trim()) { // Pulls from Column C
+                remindersHtml += `<div class="task-item">○ ${cols[2].trim()}</div>`;
             }
         });
 
         document.getElementById('todo-list-dinner').innerHTML = todayHtml || "○ No tasks";
         document.getElementById('todo-list-tasks').innerHTML = cookingHtml || "○ No tasks";
-    } catch (e) {
-        document.getElementById('todo-list-dinner').innerHTML = "Sheet Error";
+        document.getElementById('reminders-list').innerHTML = remindersHtml || "○ No tasks"; // NEW
     }
 }
 updateDashboardTasks();
