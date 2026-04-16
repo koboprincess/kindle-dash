@@ -15,8 +15,8 @@ body {
     box-sizing: border-box;
     display: grid;
     
-    /* Back to 2 equal columns */
-    grid-template-columns: 1fr 1fr; 
+    /* 3 Columns across the body */
+    grid-template-columns: 1fr 1fr 1fr; 
     grid-template-rows: auto auto 1fr;
     gap: 0; 
     overflow: hidden;
@@ -24,7 +24,7 @@ body {
 
 /* 2. THE HEADER (DATE BOX + WEATHER BOX) */
 #header-container {
-    grid-column: 1 / 3;
+    grid-column: 1 / 4;
     width: 100%;
     display: flex;                
     justify-content: space-between; 
@@ -39,7 +39,6 @@ body {
     display: flex;
     flex-direction: column;       
     align-items: flex-start;
-    width: auto;                  
     min-width: 500px;             
 }
 
@@ -50,39 +49,18 @@ body {
     line-height: 1.1;
     margin-bottom: 5px;
     white-space: nowrap;          
-    display: block;
 }
 
 #moon-phase {
     display: flex;
     align-items: center;
-    justify-content: flex-start;
     gap: 15px;
 }
 
-.moon-icon {
-    font-size: 70px !important; 
-    line-height: 1;
-}
+.moon-icon { font-size: 70px !important; }
+.moon-name { font-size: 24px; font-weight: bold; text-transform: uppercase; }
+.moon-percent { font-size: 20px; opacity: 0.8; }
 
-.moon-details {
-    display: flex;
-    flex-direction: column;
-    text-align: left;
-}
-
-.moon-name {
-    font-size: 24px;
-    font-weight: bold;
-    text-transform: uppercase;
-}
-
-.moon-percent {
-    font-size: 20px;
-    opacity: 0.8;
-}
-
-/* WEATHER BOX STYLING */
 #weather-box {
     background-color: #e0e0e0 !important; 
     padding: 20px 30px; 
@@ -92,56 +70,52 @@ body {
     gap: 25px;
 }
 
-#weather-icon { 
-    width: 150px; 
-    height: 150px; 
-    filter: grayscale(100%) contrast(2.5); 
-}
+#weather-icon { width: 150px; height: 150px; filter: grayscale(100%) contrast(2.5); }
+#temp-text { font-size: 90px; font-weight: bold; line-height: 0.9; }
+#hi-lo-text { font-size: 28px; line-height: 1.2; margin-top: 5px; }
 
-.temp-container {
-    display: flex;
-    flex-direction: column;
-}
+/* 3. CONTENT COLUMNS (3-COLUMN GRID) */
 
-#temp-text { 
-    font-size: 90px; 
-    font-weight: bold; 
-    line-height: 0.9;
-}
-
-#hi-lo-text {
-    font-size: 28px;
-    line-height: 1.2;
-    margin-top: 5px;
-}
-
-#hi-lo-text b {
-    font-weight: bold;
-}
-
-/* 3. CONTENT COLUMNS */
 .main-container {
-    grid-column: 1 / 3;
-    display: flex; /* Flex is safer for 2 columns */
+    grid-column: 1 / 4;   /* Span full width */
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr; 
     width: 100%;
+    gap: 30px;            /* Gap between the 3 columns */
 }
 
+/* Column 1: Cooking */
 .left-col { 
-    flex: 1;
-    padding-right: 50px;
+    grid-column: 1;
 }
 
-.right-col { 
-    flex: 1;
-    border-left: 6px solid black; 
-    padding-left: 50px;
-    min-height: var(--header-line-length); 
+/* Column 2: To Do (with divider on the left) */
+.middle-col { 
+    grid-column: 2;
+    border-left: 5px solid black; 
+    padding-left: 30px;
+    min-height: var(--header-line-length);
 }
 
+/* Column 3: Reminders (The Sticky Note) */
+.right-col-3 { 
+    grid-column: 3;
+}
+
+.sticky-note {
+    background-color: #333333; /* Dark Grey */
+    color: white;              /* White Text */
+    padding: 30px;
+    border-radius: 20px;
+    height: 100%;
+    box-sizing: border-box;
+}
+
+/* Shared Task Styling */
 .todo-title { 
-    font-size: 45px; 
+    font-size: 38px; 
     font-weight: bold; 
-    margin-bottom: 30px; 
+    margin-bottom: 20px; 
     text-transform: uppercase; 
     border-bottom: 5px solid black;
     width: 100%; 
@@ -149,29 +123,28 @@ body {
 }
 
 .task-item {
-    font-size: 40px;
-    margin-bottom: 15px;
-    line-height: 1.3;
+    font-size: 34px; 
+    margin-bottom: 12px;
+    line-height: 1.2;
 }
 
 /* 4. THE QUOTE BOX */
 #quote-box { 
-    grid-column: 1 / 3; 
+    grid-column: 1 / 4; 
     align-self: end; 
     text-align: center;
-    font-size: 42px; 
+    font-size: 40px; 
     line-height: 1.4; 
     font-style: italic; 
     background: #e0e0e0 !important;
-    padding: 30px 40px; 
+    padding: 25px 40px; 
     border-radius: 20px;
     margin-top: 20px;
 }
 
 .quote-author {
     display: block;
-    font-size: 35px;
-    font-style: normal;
+    font-size: 32px;
     font-weight: bold;
-    margin-top: 15px;
+    margin-top: 10px;
 }
