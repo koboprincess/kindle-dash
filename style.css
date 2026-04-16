@@ -42,11 +42,11 @@ body {
     position: absolute;
     
     /* --- MANUALLY MOVE DATE HERE --- */
-    top: 20px;   /* Distance from top edge */
+    top: 10px;   /* Distance from top edge */
     left: 0px;  /* Distance from left edge */
     
     /* Font Styling */
-    font-size: 55px; 
+    font-size: 60px; 
     font-weight: bold;
     text-transform: uppercase;
 }
