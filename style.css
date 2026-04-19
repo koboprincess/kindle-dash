@@ -43,6 +43,10 @@ body {
     min-width: 750px;             
 }
 
+#moon-phase {
+    display: contents;
+}
+
 /* Force the Moon Icon to sit on the left */
 #moon-phase img {
     order: 1;                 /* Position 1 (Left) */
@@ -53,9 +57,11 @@ body {
 
 /* Force the entire text stack to the right */
 .text-column {
+    order: 2; 
     display: flex; 
     flex-direction: column;   /* Stack Date, Name, and % vertically */
     justify-content: center;
+    align-items: flex-start;
 } 
 
 #date {
