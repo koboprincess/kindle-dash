@@ -69,22 +69,22 @@ function getMoonPhase() {
 
     let moonData = { name: "", icon: "", percent: illumination };
 
-    if (age <= 1) moonData = { ...moonData, name: "New Moon", icon: "🌑" };
-    else if (age <= 6) moonData = { ...moonData, name: "Waxing Crescent", icon: "🌒" };
-    else if (age <= 9) moonData = { ...moonData, name: "First Quarter", icon: "🌓" };
-    else if (age <= 14) moonData = { ...moonData, name: "Waxing Gibbous", icon: "🌔" };
-    else if (age <= 16) moonData = { ...moonData, name: "Full Moon", icon: "🌕" };
-    else if (age <= 21) moonData = { ...moonData, name: "Waning Gibbous", icon: "🌖" };
-    else if (age <= 24) moonData = { ...moonData, name: "Last Quarter", icon: "🌗" };
-    else if (age <= 28) moonData = { ...moonData, name: "Waning Crescent", icon: "🌘" };
-    else moonData = { ...moonData, name: "New Moon", icon: "🌑" };
+    if (age <= 1) moonData = { ...moonData, name: "New Moon", file: "newmoon.png" };
+    else if (age <= 6) moonData = { ...moonData, name: "Waxing Crescent", file: "waxingcrescent.png" };
+    else if (age <= 9) moonData = { ...moonData, name: "First Quarter", file: "firstquarter.png" };
+    else if (age <= 14) moonData = { ...moonData, name: "Waxing Gibbous", file: "waxinggibbous.png" };
+    else if (age <= 16) moonData = { ...moonData, name: "Full Moon", file: "fullmoon.png" };
+    else if (age <= 21) moonData = { ...moonData, name: "Waning Gibbous", file: "waninggibbous.png" };
+    else if (age <= 24) moonData = { ...moonData, name: "Last Quarter", file: "lastquarter.png" };
+    else if (age <= 28) moonData = { ...moonData, name: "Waning Crescent", file: "waningcrescent.png" };
+    else moonData = { ...moonData, name: "New Moon", file: "moon-new.png" };
 
     return moonData;
 }
 
 const moon = getMoonPhase();
 document.getElementById('moon-phase').innerHTML = `
-    <span class="moon-icon">${moon.icon}</span> 
+    <img src="icons/${moon.file}" style="width:45px; height:45px; filter: grayscale(100%) contrast(2);"> 
     <div class="moon-details">
         <div class="moon-name">${moon.name}</div>
         <div class="moon-percent">${moon.percent}%</div>
