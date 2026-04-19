@@ -51,13 +51,7 @@
 
     <div id="quote-box"></div>
 
-    <script>
-        // 1. DATE
-document.getElementById('date').innerText = new Date().toLocaleDateString('en-GB', { 
-    weekday: 'long', 
-    day: 'numeric', 
-    month: 'long' 
-});
+    <script> 
 
 // 2. MOON PHASE
 function getMoonPhase() {
@@ -86,10 +80,13 @@ function getMoonPhase() {
 
 const moon = getMoonPhase();
 document.getElementById('moon-phase').innerHTML = `
-    <img src="icons/${moon.file}" style="width:150px; height:150px; filter: grayscale(100%) contrast(2);"> 
-    <div class="moon-details">
-        <div class="moon-name">${moon.name}</div>
-        <div class="moon-percent">${moon.percent}%</div>
+    <img src="icons/${moon.file}" style="width:150px; height:150px; filter: grayscale(100%) contrast(2);" class="moon-icon">
+    <div class="moon-text-stack">
+        <div id="date">${new Date().toLocaleDateString('en-GB', { weekday: 'long', day: 'numeric', month: 'long' })}</div>
+        <div class="moon-details">
+            <span class="moon-name">${moon.name}</span>
+            <span class="moon-percent">${moon.percent}%Illumination</span>
+        </div>
     </div>
 `;
 
