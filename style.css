@@ -44,6 +44,7 @@ body {
 }
 
 #date {
+    order: 1;
     font-size: 70px;              
     font-weight: bold;
     text-transform: uppercase;
@@ -53,12 +54,14 @@ body {
 }
 
 #moon-phase-details {
-    display: flex;
+    order: 2;
+    display: block;
     flex-direction: column;
     justify-content: center;
 }
 
 .moon-icon { 
+    order: -1;
     width: 150px; 
     height: 150px; 
     object-fit: contain; /* Ensures the moon doesn't stretch */
