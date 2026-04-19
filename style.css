@@ -36,25 +36,25 @@ body {
     background-color: #e0e0e0;
     padding: 20px 35px;           
     border-radius: 15px;
-    display: grid;
-    grid-template-columns: 160px 1fr;
+    display: flex;
+    flex-direction: row; 
     align-items: center;
     gap: 30px;
     min-width: 700px;             
 }
 
 #moon-phase img {
-    grid-column: 1;
+    order: 1;
     width: 150px; 
     height: 150px; 
     margin: 0;
+    flex-shrink: 0;
 }
 
 .text-column {
     order: 2;
     display: flex; 
     flex-direction: column; 
-    justify-content: center;
     align-items: flex-start; /* Align all text to the left of the column */
 } 
 
@@ -68,8 +68,7 @@ body {
 }
 
 #moon-phase {
-    display: flex; 
-    flex-direction: column; 
+    display: contents; 
 }
 
 .moon-details {
