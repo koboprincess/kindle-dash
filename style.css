@@ -57,9 +57,15 @@ body {
     gap: 15px;
 }
 
-.moon-icon { font-size: 70px !important; }
-.moon-name { font-size: 24px; font-weight: bold; text-transform: uppercase; }
-.moon-percent { font-size: 20px; opacity: 0.8; }
+.moon-icon { 
+    width: 70px; 
+    height: 70px; 
+    object-fit: contain; /* Ensures the moon doesn't stretch */
+    display: block;      /* Helps with alignment */
+    margin: 0 auto 5px; /* Centers it and adds a little space above the text */
+}
+.moon-name { font-size: 30px; font-weight: bold; text-transform: uppercase; }
+.moon-percent { font-size: 25px; opacity: 1.0; }
 
 #weather-box {
     background-color: #e0e0e0 !important; 
