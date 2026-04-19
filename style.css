@@ -108,11 +108,11 @@ body {
 #temp-text { 
     font-size: 90px; 
     font-weight: bold; 
-    line-height: 0.9; 
+    line-height: 1.0; 
 }
 
 #hi-lo-text { 
-    font-size: 25px; 
+    font-size: 28px; 
     line-height: 1.1; 
     margin-top: 5px; 
 }
