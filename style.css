@@ -53,11 +53,9 @@ body {
 
 /* Force the entire text stack to the right */
 .text-column {
-    order: 2;                 /* Position 2 (Right) */
     display: flex; 
     flex-direction: column;   /* Stack Date, Name, and % vertically */
     justify-content: center;
-    align-items: flex-start;
 } 
 
 #date {
@@ -65,14 +63,7 @@ body {
     font-weight: bold;
     text-transform: uppercase;
     line-height: 1.0;         /* Tighten line height to close the gap */
-    margin: 0 0 5px 0;
-    white-space: nowrap;
-}
-
-/* This is the magic part: it makes the image and text inside it 
-   behave like they aren't inside a container */
-#moon-phase {
-    display: contents; 
+    margin-bottom: 5px;
 }
 
 .moon-details {
@@ -88,7 +79,7 @@ body {
 
 .moon-percent { 
     font-size: 25px; 
-    opacity: 0.8; 
+    opacity: 1.0; 
 }
 
 #weather-box {
