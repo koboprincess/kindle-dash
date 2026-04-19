@@ -64,13 +64,15 @@ body {
     font-weight: bold;
     text-transform: uppercase;
     line-height: 1.0;         /* Tighten line height to close the gap */
-    margin: 5px;
+    margin: 0px;
+    padding: 0;
 }
 
 .moon-details {
     display: flex; 
     flex-direction: column;
     margin-top: 5px;
+    margin-left: 2px;
     gap: 2px;
 }
 
