@@ -10,8 +10,6 @@
     <div id="header-container">
         <div id="info-box-left" class="grey-box">
             <div id="moon-phase"></div>
-            <div class="text-column">
-                <div id="date">Loading date...</div> 
             </div>
         </div>
 
@@ -85,7 +83,7 @@ document.getElementById('moon-phase').innerHTML = `
         <div id="date">${new Date().toLocaleDateString('en-GB', { weekday: 'long', day: 'numeric', month: 'long' })}</div>
         <div class="moon-details">
             <span class="moon-name">${moon.name}</span>
-            <span class="moon-percent">${moon.percent}%Illumination</span>
+            <span class="moon-percent">${moon.percent}% Illumination</span>
         </div>
     </div>
 `;
