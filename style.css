@@ -34,46 +34,50 @@ body {
 
 #info-box-left {
     background-color: #e0e0e0;
-    padding: 20px 35px;           
+    padding: 25px 35px;           
     border-radius: 15px;
-    display: flex;
-    flex-direction: row; 
-    align-items: center;
+    display: flex;            /* Use flex to put icon and text side-by-side */
+    flex-direction: row;
+    align-items: center;      /* Vertically center the moon icon with the text block */
     gap: 30px;
-    min-width: 700px;             
+    min-width: 750px;             
 }
 
+/* Force the Moon Icon to sit on the left */
 #moon-phase img {
-    order: 1;
-    width: 150px; 
-    height: 150px; 
-    margin: 0;
-    flex-shrink: 0;
+    order: 1;                 /* Position 1 (Left) */
+    width: 150px !important;  /* Ensure it stays big */
+    height: 150px !important;
+    flex-shrink: 0;           /* Prevent the moon from being squished */
 }
 
+/* Force the entire text stack to the right */
 .text-column {
-    order: 2;
+    order: 2;                 /* Position 2 (Right) */
     display: flex; 
-    flex-direction: column; 
-    align-items: flex-start; /* Align all text to the left of the column */
+    flex-direction: column;   /* Stack Date, Name, and % vertically */
+    justify-content: center;
+    align-items: flex-start;
 } 
 
 #date {
     font-size: 70px;              
     font-weight: bold;
     text-transform: uppercase;
-    line-height: 1.1;
+    line-height: 1.0;         /* Tighten line height to close the gap */
     margin: 0 0 5px 0;
     white-space: nowrap;
 }
 
+/* This is the magic part: it makes the image and text inside it 
+   behave like they aren't inside a container */
 #moon-phase {
     display: contents; 
 }
 
 .moon-details {
     display: flex; 
-    flex-direction: column; /*Stack name and percent*/
+    flex-direction: column;
 }
 
 .moon-name { 
@@ -84,7 +88,7 @@ body {
 
 .moon-percent { 
     font-size: 25px; 
-    opacity: 1.0; 
+    opacity: 0.8; 
 }
 
 #weather-box {
