@@ -58,8 +58,8 @@ body {
 }
 
 .moon-icon { 
-    width: 80px; 
-    height: 80px; 
+    width: 100px; 
+    height: 100px; 
     object-fit: contain; /* Ensures the moon doesn't stretch */
     display: block;      /* Helps with alignment */
     margin: 0 auto 5px; /* Centers it and adds a little space above the text */
