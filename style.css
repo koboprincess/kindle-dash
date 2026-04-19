@@ -53,14 +53,14 @@ body {
     width: 150px !important;  /* Ensure it stays big */
     height: 150px !important;
     flex-shrink: 0;           /* Prevent the moon from being squished */
+    margin: 0;
 }
 
 /* Force the entire text stack to the right */
-.text-column {
+.text-column, moon-details {
     order: 2; 
     display: flex; 
     flex-direction: column;   /* Stack Date, Name, and % vertically */
-    justify-content: center;
     align-items: flex-start;
 } 
 
@@ -70,11 +70,6 @@ body {
     text-transform: uppercase;
     line-height: 1.0;         /* Tighten line height to close the gap */
     margin-bottom: 5px;
-}
-
-.moon-details {
-    display: flex; 
-    flex-direction: column;
 }
 
 .moon-name { 
