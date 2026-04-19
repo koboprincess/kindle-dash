@@ -38,14 +38,12 @@ body {
     border-radius: 15px;
     display: flex;
     flex-direction: row;
-    flex-wrap: wrap;
     align-items: center;
-    gap: 25px;
+    gap: 30px;
     min-width: 700px;             
 }
 
 #date {
-    order: 2;
     font-size: 70px;              
     font-weight: bold;
     text-transform: uppercase;
@@ -54,22 +52,35 @@ body {
     white-space: nowrap;          
 }
 
-#moon-phase-details {
-    order: 3;
-    display: contents;
+#moon-phase {
+    order: 2;
+    display: flex;
     flex-direction: column;
-    justify-content: flex-start;
+    justify-content: center;
 }
 
-.moon-icon { 
+#moon-phase img, .moon-icon { 
     order: 1;
     width: 150px; 
     height: 150px; 
-    object-fit: contain; /* Ensures the moon doesn't stretch */
     margin: 0 auto 5px; /* Centers it and adds a little space above the text */
 }
-.moon-name { font-size: 30px; font-weight: bold; text-transform: uppercase; }
-.moon-percent { font-size: 25px; opacity: 1.0; }
+
+.moon-details {
+    display: flex; 
+    flex-direction: column; /*Stack name and percent*/
+}
+
+.moon-name { 
+    font-size: 30px; 
+    font-weight: bold; 
+    text-transform: uppercase; 
+}
+
+.moon-percent { 
+    font-size: 25px; 
+    opacity: 1.0; 
+}
 
 #weather-box {
     background-color: #e0e0e0 !important; 
