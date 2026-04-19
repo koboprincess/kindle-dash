@@ -43,33 +43,28 @@ body {
     min-width: 750px;             
 }
 
-#moon-phase {
-    display: contents;
-}
-
-/* Force the Moon Icon to sit on the left */
-#moon-phase img {
-    order: 1;                 /* Position 1 (Left) */
+.moon-icon {
     width: 150px !important;  /* Ensure it stays big */
     height: 150px !important;
     flex-shrink: 0;           /* Prevent the moon from being squished */
-    margin: 0;
 }
 
-/* Force the entire text stack to the right */
-.text-column, moon-details {
-    order: 2; 
+.moon-text-stack {
     display: flex; 
-    flex-direction: column;   /* Stack Date, Name, and % vertically */
-    align-items: flex-start;
-} 
+    flex-direction: column;
+    justify-content: center;
+}
 
 #date {
     font-size: 70px;              
     font-weight: bold;
     text-transform: uppercase;
     line-height: 1.0;         /* Tighten line height to close the gap */
-    margin-bottom: 5px;
+    margin: 5px;
+}
+
+.moon-details {
+    margin-top: 5px;
 }
 
 .moon-name { 
