@@ -68,18 +68,23 @@ body {
 }
 
 .moon-details {
+    display: flex; 
+    flex-direction: column;
     margin-top: 5px;
+    gap: 2px;
 }
 
 .moon-name { 
     font-size: 30px; 
     font-weight: bold; 
     text-transform: uppercase; 
+    line-height: 1.1;
 }
 
 .moon-percent { 
     font-size: 25px; 
-    opacity: 1.0; 
+    opacity: 1.0;
+    line-height: 1.1;
 }
 
 #weather-box {
