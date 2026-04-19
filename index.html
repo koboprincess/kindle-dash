@@ -79,8 +79,8 @@ document.getElementById('moon-phase').innerHTML = `
     <div class="moon-text-stack">
         <div id="date">${new Date().toLocaleDateString('en-GB', { weekday: 'long', day: 'numeric', month: 'long' })}</div>
         <div class="moon-details">
-            <span class="moon-name">${moon.name}</span>
-            <span class="moon-percent">${moon.percent}% Illumination</span>
+            <div class="moon-name">${moon.name}</div>
+            <div class="moon-percent">${moon.percent}%</div>
         </div>
     </div>
 `;
